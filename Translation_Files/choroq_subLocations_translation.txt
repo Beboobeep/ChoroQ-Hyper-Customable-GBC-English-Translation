@@ -1,0 +1,186 @@
+# Choro Q - Hyper Customable GBC
+# Sub-Locations / Menu Text Translation File
+# Bank 0x06 (ROM 0x018000-0x01BFFF -> CPU 0x4000-0x7FFF)
+
+# LOCATION NAMES: Have pointer table at 0x0180B2-0x0180C0
+#   - New strings written to 0x018480+
+#   - Pointers updated to point to new locations
+
+# MENU TEXT: Inline strings (no pointers found)
+#   - In-place replacement with padding
+
+# ----------------------------------------
+# LOCATION NAMES (with pointers)
+# Pointer table: 0x0180B2-0x0180C0 (8 entries)
+# New strings go to: 0x018480+
+# ----------------------------------------
+
+[ENTRY:001]
+PTR_OFFSET: 0x0180B2
+STR_ROM: 0x0180C2
+STR_LEN: 11
+JAPANESE: けんQがくえんとし
+ENGLISH: Q ACADEMY CITY
+[END]
+
+[ENTRY:002]
+PTR_OFFSET: 0x0180B4
+STR_ROM: 0x0180CD
+STR_LEN: 6
+JAPANESE: とうきょう
+ENGLISH: TOKYO
+[END]
+
+[ENTRY:003]
+PTR_OFFSET: 0x0180B6
+STR_ROM: 0x0180D3
+STR_LEN: 7
+JAPANESE: ちゅうごく
+ENGLISH: CHINA
+[END]
+
+[ENTRY:004]
+PTR_OFFSET: 0x0180B8
+STR_ROM: 0x0180DA
+STR_LEN: 8
+JAPANESE: オーストラリア
+ENGLISH: AUSTRALIA
+[END]
+
+[ENTRY:005]
+PTR_OFFSET: 0x0180BA
+STR_ROM: 0x0180E2
+STR_LEN: 5
+JAPANESE: イタリア
+ENGLISH: ITALY
+[END]
+
+[ENTRY:006]
+PTR_OFFSET: 0x0180BC
+STR_ROM: 0x0180E7
+STR_LEN: 4
+JAPANESE: ロシア
+ENGLISH: RUSSIA
+[END]
+
+[ENTRY:007]
+PTR_OFFSET: 0x0180BE
+STR_ROM: 0x0180EB
+STR_LEN: 5
+JAPANESE: アメリカ
+ENGLISH: AMERICA
+[END]
+
+[ENTRY:008]
+PTR_OFFSET: 0x0180C0
+STR_ROM: 0x0180F0
+STR_LEN: 7
+JAPANESE: マショットとう
+ENGLISH: MASHOT ISLAND
+[END]
+
+# ----------------------------------------
+# SHOP MENU TEXT (inline, no pointers)
+# In-place replacement with space padding
+# ----------------------------------------
+
+[ENTRY:009]
+PTR_OFFSET: NONE
+STR_ROM: 0x0180F7
+STR_LEN: 12
+JAPANESE: かう Qショップ !
+ENGLISH: BUY QSHOP!
+[END]
+
+[ENTRY:010]
+PTR_OFFSET: NONE
+STR_ROM: 0x018103
+STR_LEN: 12
+JAPANESE: うる Qショップ !
+ENGLISH: SELL QSHOP!
+[END]
+
+[ENTRY:011]
+PTR_OFFSET: NONE
+STR_ROM: 0x01810F
+STR_LEN: 12
+JAPANESE: かう かくれショップ
+ENGLISH: BUY HIDDEN
+[END]
+
+[ENTRY:012]
+PTR_OFFSET: NONE
+STR_ROM: 0x01811B
+STR_LEN: 12
+JAPANESE: うる かくれショップ
+ENGLISH: SELL HIDDEN
+[END]
+
+# ----------------------------------------
+# PARTS MENU TEXT (inline, no pointers)
+# ----------------------------------------
+
+[ENTRY:013]
+PTR_OFFSET: NONE
+STR_ROM: 0x018127
+STR_LEN: 21
+JAPANESE: カタログ    パーツせいのうリスト
+ENGLISH: CATALOG   PART STATS
+[END]
+
+[ENTRY:014]
+PTR_OFFSET: NONE
+STR_ROM: 0x01813C
+STR_LEN: 20
+JAPANESE: カスタム    パーツこうかんリスト
+ENGLISH: CUSTOM   TRADE LIST
+[END]
+
+[ENTRY:015]
+PTR_OFFSET: NONE
+STR_ROM: 0x018150
+STR_LEN: 9
+JAPANESE: カスタム ?
+ENGLISH: CUSTOM ?
+[END]
+
+[ENTRY:016]
+PTR_OFFSET: NONE
+STR_ROM: 0x018159
+STR_LEN: 22
+JAPANESE: ベスト        パーツをえらぶ
+ENGLISH: BEST    SELECT PARTS
+[END]
+
+[ENTRY:017]
+PTR_OFFSET: NONE
+STR_ROM: 0x01816F
+STR_LEN: 21
+JAPANESE: すてる        パーツをえらぶ
+ENGLISH: DISCARD SELECT PARTS
+[END]
+
+[ENTRY:018]
+PTR_OFFSET: NONE
+STR_ROM: 0x018184
+STR_LEN: 21
+JAPANESE: こうかん       パーツをえらぶ
+ENGLISH: TRADE   SELECT PARTS
+[END]
+
+[ENTRY:019]
+PTR_OFFSET: NONE
+STR_ROM: 0x018199
+STR_LEN: 20
+JAPANESE:  てき       パーツのせいのう
+ENGLISH:  FOE      PART STATS
+[END]
+
+[ENTRY:020]
+PTR_OFFSET: NONE
+STR_ROM: 0x0181AD
+STR_LEN: 22
+JAPANESE:  じぶん      パーツのせいのう
+ENGLISH:  SELF     PART STATS
+[END]
+

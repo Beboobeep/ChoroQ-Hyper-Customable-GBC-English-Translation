@@ -1,0 +1,98 @@
+CHORO Q HYPER CUSTOMABLE - GBC - ROM HACKING NOTES
+--------------------------------------------------
+
+**ORIGINAL ROM SIZE IS 2097159 BYTES. REMEMBER TO REMOVE ZERO PADDING AT END**
+
+**TEXT ENCODING WAS CORRECTED ON 3/9/26 9:00PM. FILES GENERATED BEFORE THIS DATETIME HAVE WRONG ENCODING***
+
+
+%%% to calculate pointer addresses ::  %%%%%%%%%%%%%%%%%%%%%
+
+
+( 0x< ROM Address > ) / ( 0x4000 ) = ( 0x < BANK# > ) 
+
+( 0x < BANK# > ) * ( 0x4000 ) = ( 0x <BANK Start Address )
+
+( 0x< ROM Address > ) - ( 0x <BANK Start Address ) = ( 0x < Pointer Address NOT Accounting for BANK 0 > )
+
+( 0x < Pointer Address NOT Accounting for BANK 0 > ) + ( 0x4000) = ( 0x < Pointer Address )
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+ROM file offset = (bank_number * 0x4000) + (CPU address - 0x4000)
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+
+0x8C000 is location of font table
+
+0x140410 is the location for the first text present in the game.
+
+FE is line break control code
+A4 is space 
+FC is text pause
+FD is text end
+
+0x140410: E0 is a pointer to where the player name is stored
+
+0x028000: text pointer table. format is <LO.ptr> <HI.ptr> <bank.id> 
+
+0x02806F: pointer to first line of text in the game
+
+**13 CHARACTERS CAN FIT PER LINE W/I NORMAL TEXT BOXES (FC and FD count as a char)**
+
+0x140710: Debug Mode????
+
+0x0306D5 :: game boot cutscene vehicle info text
+
+Listing of cars from the choroQ super customable toy line :: https://choroq.fandom.com/wiki/Customable_Choro-Q?utm_source=chatgpt.com#Vehicles_-_Customable_Choro-Q
+
+0x044162 :: "enter your name" Japanese instructions at name entry menu
+
+0x071339 :: (Mom) - Techno {City?} :: check manual to see if hometown is called Tekuno or Techno -- THIS IS WRONG, MOM'S *NAME* IS TEKUNO
+
+0x1C9EB4 :: text for rubber roller in shop :: pointer to this text data is at 0x1C8A88
+
+0x0456F1 :: text for shop 'catalog' :: 2 byte pointer for this text is calculated to be 56F1 (search F156) --verified.
+
+**TODO** 0x000260 :: text for the recommended name of the first choro q obtained from research lab "Bio Special" :: **need to change all 23 pointers and move this default name to the null space w/i BANK 0
+
+0x1572D2 :: shop keeper text that states how much money you have before AND after a purchase. ****
+
+$$$$     TEXT OPCODES ARE E0 OR GREATER BYTE VALUES   $$$$
+
+Control code :: E4 = current player money reference
+
+0x048660 :: address that E4 references. see ASM for jump table for special op codes
+
+0x048660 :: setting this byte to 00 makes all items FREE$$$$ ---- but the game freezes lol
+
+0x1572EB :: shop clerk purchase confirmation text
+
+-------------------------------------------------------------------------------------
+Bank 0A:406E-407C — Mom's "give 500 gold" event sequence:
+
+406E: 22 10 44 50    → Show dialogue (addr 4410, bank 50)
+4072: 05             → (end dialogue command?)
+4073: 21 08          → ???
+4075: 19 39 00       → ???
+4078: 02             → ???
+4079: A6 07          → Call routine 07A6
+407B: 00             → Index 0 → gives 500 gold
+407C: 00             → ???
+
+(@ ROM 0x028079, routine is called)
+0x04A138 :: Money given by Mom at beginning of game. MAX IT OUT $$$$$$$$$$$$$$$$$$$$$$$$$$$LOOK_HERE_DOOD$$$$$$$$$$$$$$$$$
+------------------------------------------------------------------------
+
+0x05C1C0 :: Player name with other characters shown in top left UI box
+
+0x0456F7 :: sub menu text at game start
+
+0x04AE71 :: save game menu text
+
+0x044CEE :: "continue" text at title screen. **changed to load
+
+*** 75 78 5C 7C *** hex search for SWAP KEYBOARD. multiple locations. (keyboard entry button) ##text:: 0x08D0D3 // NEW:[A4 4F 4B A4]
+*** 76 94 70 7C *** hex search for ENTER KEYBOARD multiple locations. (keyboard entry button) ##text:: 0x8D0AB, 0x8D1D7, 0x8D28B NEW:[53 57 41 50]

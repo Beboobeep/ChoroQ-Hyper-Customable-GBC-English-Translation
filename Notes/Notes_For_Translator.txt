@@ -1,0 +1,44 @@
+The "Hacked Copy" patch contains one-off translations that aren't handled by scripted insertion (title animation, title screen, name entries, etc)
+
+The "INF Gold Hacked Copy" patch contains the one off translations as well as 99999 gold given to you by your mom at the start of the game.
+
+
+
+## Below notes are also in the choroq_full_translation_file.txt ##
+
+
+
+# Choro Q - Hyper Customable GBC
+
+# PROGRESS :: 646/1451
+
+# GARBAGE TEXT BLOCKS DELETED :: #<EMPTY>
+
+# Total blocks: 1451
+
+# 13 char limit including spaces, ▼ (continue text markers, FC), and <END> (end of text block markers, FD)
+
+# <STOP> is FF terminator.
+
+# ▼ & [END] must always be on the bottom line of the text box. Plz ensure newline if text block ends on upper line, or if sentence ends on an upper line.
+
+# Quality over str_len ;) [I *might* need to adjust part names/types, but we'll get there when we get there.]
+
+# If you see any garbage extracted, just delete the block and note block# deleted up here
+
+# Insert English between --- ENGLISH TRANSLATION --- & --- plz
+
+# Retain proper notation for NPC FACE ID's :: <FACE:XX,YY>
+
+# [E0] through [E8] are program related! Retain these in the English text or playtesting will not be happy times
+
+		#[E0] :: Player name reference
+		#[E1] :: Player's Choro-Q car name reference [BIO SPECIAL?]
+		#[E2] :: Item bet by player during practice race (grassroots race?)
+		#[E3] :: Item bet by opponent during practice race (grassroots race?)
+		#[E4] :: Current player gold
+		#[E5] :: Remaining gold after purchase
+		#[E6] :: Name of other player when establishing connection for 2P link race
+		#[E7] :: Player's # of wins during 2P link race
+		#[E8] :: Opponent's # of wins during 2P link race
+		#[E9 - EF] :: ??
