@@ -56,7 +56,7 @@ Listing of cars from the choroQ super customable toy line :: https://choroq.fand
 
 0x0456F1 :: text for shop 'catalog' :: 2 byte pointer for this text is calculated to be 56F1 (search F156) --verified.
 
-**TODO** 0x000260 :: text for the recommended name of the first choro q obtained from research lab "Bio Special" :: **need to change all 23 pointers and move this default name to the null space w/i BANK 0
+**TODO** 0x000260 :: text for the recommended name of the first choro q obtained from research lab "Bio Special" :: **need to change all 23 pointers and move this default name to the null space w/i BANK 0?
 
 0x1572D2 :: shop keeper text that states how much money you have before AND after a purchase. ****
 
@@ -96,3 +96,20 @@ Bank 0A:406E-407C — Mom's "give 500 gold" event sequence:
 
 *** 75 78 5C 7C *** hex search for SWAP KEYBOARD. multiple locations. (keyboard entry button) ##text:: 0x08D0D3 // NEW:[A4 4F 4B A4]
 *** 76 94 70 7C *** hex search for ENTER KEYBOARD multiple locations. (keyboard entry button) ##text:: 0x8D0AB, 0x8D1D7, 0x8D28B NEW:[53 57 41 50]
+
+the arrow can be moved wherever now since its x,y coord's are hardcoded in one location in the ROM at 0x0483B6
+
+text line increment found at 0x048566 (was 3C 3C, changed to 3C 00 [changed from inc,a inc,a -> inc,a nop)
+
+breakpoint used when analyzing FC 0:1289 -- 0x01ED
+
+random dakuten and handakuten at 0x97E20 for some reason?? had to clear them out and draw text border in.
+
+=======================================================
+New code at ROM 0x4BD40 for jumping to different tile at tile id EF:
+21 17 C4 34 7E FE EF 20 02 36 FB C9
+
+ROM 0x4849E jump to the code above:
+Change 21 17 C4 to C3 40 7D (jp 7D40)
+=======================================================
+
