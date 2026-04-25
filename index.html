@@ -337,12 +337,18 @@
       <span>Max lines/frame: 3</span>
       <span>Line break: Enter key</span>
       <span>Page break: ▼ (FC byte)</span>
-      <span>[E0],[E2]-[E8] = ~5 chars wide</span>
+      <span>[E0] Player Name = 5 chars</span>
       <span>[E1] Car Name = up to 13 chars</span>
+      <span>[E2] Player Bet = up to 13 chars</span>
+      <span>[E3] Opp. Bet = up to 13 chars</span>
+      <span>[E4] Gold = up to 6 chars</span>
+      <span>[E5] Remaining Gold = up to 6 chars</span>
+      <span>[E6]-[E8] = ~5 chars</span>
       <span>&lt;FACE:XX,YY&gt; = NPC portrait</span>
-      <span>&lt;STOP&gt; = FF terminator</span>
-      <span>[END] = end of text block (FD)</span>
+      <span>[END] = ■ (1 char, FD byte)</span>
+      <span>&lt;STOP&gt; = FF terminator (no width)</span>
       <span>▼ = continue text marker (FC)</span>
+      <span>* in preview = variable placeholder</span>
     </div>
     <div style="margin-top:10px; padding-top:8px; border-top:1px solid #333">
       <b style="color:#f0a030">EDGE CASES (not checked by validator)</b>
@@ -362,16 +368,16 @@ let currentFrame = 0;
 const CODES = [
   { label: "▼ Page Break", code: "\n▼\n", desc: "Wait for button, advance to next frame" },
   { label: "[E0] Player Name", code: "[E0]", desc: "Player name reference (5 chars wide)" },
-  { label: "[E1] Car Name", code: "[E1]", desc: "Player's Choro-Q car name" },
-  { label: "[E2] Player Bet", code: "[E2]", desc: "Item bet by player during practice race" },
-  { label: "[E3] Opp. Bet", code: "[E3]", desc: "Item bet by opponent during practice race" },
-  { label: "[E4] Gold", code: "[E4]", desc: "Current player gold" },
-  { label: "[E5] Remaining", code: "[E5]", desc: "Remaining gold after purchase" },
+  { label: "[E1] Car Name", code: "[E1]", desc: "Player's Choro-Q car name (up to 13 chars)" },
+  { label: "[E2] Player Bet", code: "[E2]", desc: "Item bet by player during practice race (up to 13 chars)" },
+  { label: "[E3] Opp. Bet", code: "[E3]", desc: "Item bet by opponent during practice race (up to 13 chars)" },
+  { label: "[E4] Gold", code: "[E4]", desc: "Current player gold (up to 6 chars)" },
+  { label: "[E5] Remaining Gold", code: "[E5]", desc: "Remaining gold after purchase (up to 6 chars)" },
   { label: "[E6] 2P Name", code: "[E6]", desc: "Other player name during 2P link race" },
   { label: "[E7] P1 Wins", code: "[E7]", desc: "Player's # of wins during 2P link race" },
   { label: "[E8] P2 Wins", code: "[E8]", desc: "Opponent's # of wins during 2P link race" },
   { label: "[END]", code: "\n[END]", desc: "End of text block (FD)" },
-  { label: "<STOP>", code: "[STOP]", desc: "FF terminator" },
+  { label: "<STOP>", code: "<STOP>", desc: "FF terminator (required at end of every translation)" },
 ];
 
 // Build control code buttons
@@ -454,8 +460,14 @@ function tokenizeLine(line) {
 }
 
 function tokenWidth(t) {
-  if (t === '[E1]') return 13; // car name is up to 13 chars
-  if (t.startsWith('[E')) return 5;
+  if (t === '[E1]') return 13; // car name up to 13 chars
+  if (t === '[E2]') return 13; // player bet up to 13 chars
+  if (t === '[E3]') return 13; // opponent bet up to 13 chars
+  if (t === '[E4]') return 6;  // current gold up to 6 chars
+  if (t === '[E5]') return 6;  // remaining gold up to 6 chars
+  if (t === '[END]') return 1; // displays as ■, 1 char
+  if (t === '<STOP>') return 0; // FF terminator, no display width
+  if (t.startsWith('[E')) return 5; // E0, E6-E8 default 5 chars
   if (t.startsWith('<FACE:')) return 0;
   return t.length;
 }
@@ -551,6 +563,7 @@ const glyphs = {
   "*": ["      "," █ █  ","  █   ","█████ ","  █   "," █ █  ","      "],
   "_": ["      ","      ","      ","██████","      ","      ","      "],
   "▼": ["      ","      ","██████"," ████ ","  ██  ","      ","      "],
+  "■": ["██████","██████","██████","██████","██████","██████","██████"],
 };
 Object.entries(glyphs).forEach(([ch, rows]) => {
   FONT[ch] = rows.map(r => {
@@ -560,26 +573,52 @@ Object.entries(glyphs).forEach(([ch, rows]) => {
   });
 });
 
+// Valid characters in the game's encoding (for unknown char detection)
+const VALID_CHARS = new Set("ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789 !?.,'-/()&#*\"~▼■→←▲★♥_");
+
 function renderLine(line) {
   const tokens = tokenizeLine(line);
-  const chars = [];
+  const chars = [];    // {ch, color} pairs
   tokens.forEach(t => {
-    if (t === '[E1]') { for (let i = 0; i < 13; i++) chars.push('?'); }
-    else if (t.startsWith('[E')) { for (let i = 0; i < 5; i++) chars.push('_'); }
+    if (t === '<STOP>') { /* skip - no display */ }
+    else if (t === '[END]') { chars.push({ch: '■', color: 'normal'}); }
+    else if (t === '[E1]') { for (let i = 0; i < 13; i++) chars.push({ch: '*', color: 'normal'}); }
+    else if (t === '[E2]') { for (let i = 0; i < 13; i++) chars.push({ch: '*', color: 'normal'}); }
+    else if (t === '[E3]') { for (let i = 0; i < 13; i++) chars.push({ch: '*', color: 'normal'}); }
+    else if (t === '[E4]') { for (let i = 0; i < 6; i++) chars.push({ch: '*', color: 'normal'}); }
+    else if (t === '[E5]') { for (let i = 0; i < 6; i++) chars.push({ch: '*', color: 'normal'}); }
+    else if (t.startsWith('[E')) { for (let i = 0; i < 5; i++) chars.push({ch: '*', color: 'normal'}); }
     else if (t.startsWith('<FACE:')) { /* skip */ }
-    else chars.push(t.toUpperCase());
+    else {
+      const upper = t.toUpperCase();
+      if (VALID_CHARS.has(upper)) {
+        chars.push({ch: upper, color: 'normal'});
+      } else {
+        chars.push({ch: '?', color: 'red'});
+      }
+    }
   });
 
   const pixels = [];
+  const colors = [];
   for (let row = 0; row < 7; row++) {
     const rowPx = [];
-    chars.forEach(ch => {
+    const rowColors = [];
+    chars.forEach(({ch, color}) => {
       const g = FONT[ch] || FONT['?'];
-      if (g && g[row]) { rowPx.push(...g[row]); rowPx.push(0); }
+      if (g && g[row]) {
+        g[row].forEach(px => {
+          rowPx.push(px);
+          rowColors.push(px ? color : null);
+        });
+        rowPx.push(0);
+        rowColors.push(null);
+      }
     });
     pixels.push(rowPx);
+    colors.push(rowColors);
   }
-  return pixels;
+  return {pixels, colors};
 }
 
 function drawPreview() {
@@ -610,13 +649,14 @@ function drawPreview() {
 
   lines.forEach((line, li) => {
     if (li >= MAX_LINES) return;
-    const pixels = renderLine(line);
+    const {pixels, colors} = renderLine(line);
     const yOff = 4 + li * 11;
     const xOff = 6;
     pixels.forEach((row, ry) => {
       row.forEach((px, rx) => {
         if (px) {
-          ctx.fillStyle = '#1a1a1a';
+          const c = colors[ry][rx];
+          ctx.fillStyle = c === 'red' ? '#ff3333' : '#1a1a1a';
           ctx.fillRect((xOff + rx) * scale, (yOff + ry) * scale, scale, scale);
         }
       });
