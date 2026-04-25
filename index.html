@@ -1,0 +1,942 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>ChoroQ Hyper Customable GBC Translation Tool</title>
+<style>
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  body {
+    min-height: 100vh;
+    background: #0a0a0a;
+    background-image: url('bg.jpg');
+    background-size: cover;
+    background-position: center top;
+    background-repeat: no-repeat;
+    background-attachment: fixed;
+    color: #e0e0e0;
+    font-family: 'Courier New', monospace;
+    padding: 24px;
+  }
+
+  .container {
+    max-width: 820px;
+    margin: 0 auto;
+    background: rgba(10, 10, 10, 0.85);
+    padding: 24px;
+    border-radius: 8px;
+    border: 1px solid rgba(240, 160, 48, 0.3);
+  }
+
+  h1 {
+    font-size: 18px;
+    font-weight: bold;
+    color: #f0a030;
+    margin-bottom: 20px;
+    letter-spacing: 2px;
+  }
+
+  .columns { display: flex; gap: 24px; flex-wrap: wrap; }
+  .col { flex: 1; min-width: 300px; }
+
+  label.section {
+    font-size: 11px;
+    font-weight: bold;
+    color: #999;
+    letter-spacing: 1.5px;
+    display: block;
+    margin-bottom: 4px;
+  }
+
+  textarea {
+    width: 100%;
+    background: #2a2a2a;
+    color: #e0e0e0;
+    border: 1px solid #444;
+    border-radius: 4px;
+    padding: 10px;
+    font-family: 'Courier New', monospace;
+    font-size: 13px;
+    line-height: 1.5;
+    resize: vertical;
+    box-sizing: border-box;
+  }
+
+  textarea.source { background: #252525; color: #aaa; }
+
+  .controls { margin-top: 16px; }
+
+  .btn-row {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 6px;
+    margin-top: 4px;
+  }
+
+  button.code-btn {
+    padding: 4px 10px;
+    background: #333;
+    color: #ddd;
+    border: 1px solid #555;
+    border-radius: 4px;
+    cursor: pointer;
+    font-family: 'Courier New', monospace;
+    font-size: 11px;
+    white-space: nowrap;
+  }
+
+  button.code-btn:hover { background: #444; border-color: #777; }
+
+  button.clear-btn {
+    padding: 2px 8px;
+    font-size: 10px;
+    color: #ff6b6b;
+    border-color: #663333;
+  }
+
+  button.clear-btn:hover { background: #442222; border-color: #ff6b6b; }
+
+  .file-controls { margin-top: 16px; }
+
+  button.file-btn {
+    padding: 5px 14px;
+    background: #1a3a1a;
+    border-color: #3a6a3a;
+    color: #7ec8e3;
+  }
+
+  button.file-btn:hover { background: #2a4a2a; border-color: #5a9a5a; }
+
+  button.filter-btn { font-size: 10px; padding: 3px 10px; }
+  button.filter-btn.active { background: #444; border-color: #f0a030; color: #f0a030; }
+
+  .entry-item {
+    padding: 4px 8px;
+    cursor: pointer;
+    font-size: 11px;
+    border-bottom: 1px solid #222;
+    display: flex;
+    gap: 8px;
+  }
+  .entry-item:hover { background: #2a2a2a; }
+  .entry-item.current { background: #333; border-left: 2px solid #f0a030; }
+  .entry-item .entry-num { color: #7ec8e3; min-width: 40px; }
+  .entry-item .entry-preview { color: #aaa; overflow: hidden; white-space: nowrap; text-overflow: ellipsis; flex: 1; }
+  .entry-item .entry-status { min-width: 14px; text-align: center; }
+
+  .face-row {
+    display: flex;
+    gap: 8px;
+    margin-top: 8px;
+    align-items: center;
+  }
+
+  .face-row span { font-size: 12px; color: #999; }
+
+  input.hex {
+    width: 48px;
+    padding: 4px 6px;
+    background: #2a2a2a;
+    color: #e0e0e0;
+    border: 1px solid #444;
+    border-radius: 4px;
+    font-family: 'Courier New', monospace;
+    font-size: 12px;
+    text-align: center;
+  }
+
+  .stats {
+    margin-top: 16px;
+    padding: 8px 12px;
+    background: #252525;
+    border-radius: 4px;
+    display: flex;
+    gap: 24px;
+    font-size: 12px;
+    flex-wrap: wrap;
+  }
+
+  .stats b.info { color: #7ec8e3; }
+  .stats b.ok { color: #6bff6b; }
+  .stats b.err { color: #ff6b6b; }
+
+  .errors {
+    margin-top: 8px;
+    padding: 8px 12px;
+    background: #3a1a1a;
+    border: 1px solid #ff4444;
+    border-radius: 4px;
+  }
+
+  .errors div { font-size: 12px; color: #ff6b6b; margin-bottom: 2px; }
+
+  .preview { margin-top: 24px; }
+
+  canvas#textbox {
+    image-rendering: pixelated;
+    width: 480px;
+    height: 120px;
+    border: 2px solid #333;
+    border-radius: 4px;
+    display: block;
+  }
+
+  .nav {
+    display: flex;
+    gap: 8px;
+    margin-top: 8px;
+    align-items: center;
+  }
+
+  button.nav-btn {
+    padding: 4px 12px;
+    background: #2a2a2a;
+    color: #e0e0e0;
+    border: 1px solid #555;
+    border-radius: 4px;
+    cursor: pointer;
+    font-family: monospace;
+    font-size: 12px;
+  }
+
+  button.nav-btn:disabled { opacity: 0.4; cursor: default; }
+  button.nav-btn:hover:not(:disabled) { background: #3a3a3a; }
+
+  .nav .frame-info { font-family: monospace; font-size: 13px; color: #ccc; }
+
+  .reference {
+    margin-top: 24px;
+    padding: 12px;
+    background: #222;
+    border-radius: 4px;
+    font-size: 11px;
+    color: #888;
+  }
+
+  .reference b { color: #aaa; }
+
+  .ref-grid {
+    margin-top: 6px;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 2px 24px;
+  }
+</style>
+</head>
+<body>
+
+<div class="container">
+  <h1>CHOROQ HYPER CUSTOMABLE GBC TRANSLATION TOOL</h1>
+
+  <div class="columns">
+    <div class="col">
+      <div style="display:flex; justify-content:space-between; align-items:center">
+        <label class="section">JAPANESE SOURCE</label>
+        <button class="code-btn clear-btn" onclick="document.getElementById('japanese').value=''; update()">Clear</button>
+      </div>
+      <textarea id="japanese" class="source" rows="8"></textarea>
+    </div>
+    <div class="col">
+      <div style="display:flex; justify-content:space-between; align-items:center">
+        <label class="section">ENGLISH TRANSLATION</label>
+        <button class="code-btn clear-btn" onclick="document.getElementById('english').value=''; update()">Clear</button>
+      </div>
+      <textarea id="english" rows="8" placeholder="Enter translation here..."></textarea>
+    </div>
+  </div>
+
+  <div class="file-controls">
+    <label class="section">FILE MANAGEMENT</label>
+    <div class="btn-row" style="margin-top:4px">
+      <button class="code-btn file-btn" onclick="buildFile()">📂 Import New Dump</button>
+      <button class="code-btn file-btn" onclick="importSave()">📄 Open Saved File</button>
+      <button class="code-btn file-btn" onclick="saveToFile()">💾 Save / Export</button>
+      <input type="file" id="fileInput" accept=".txt" style="display:none" onchange="loadFile(event)">
+      <input type="file" id="saveInput" accept=".txt" style="display:none" onchange="loadFile(event)">
+    </div>
+    <div id="entryNav" style="display:none; margin-top:8px">
+      <!-- Row 1: Prev/Next + entry info + progress -->
+      <div style="display:flex; flex-wrap:wrap; gap:8px; align-items:center">
+        <button class="nav-btn" id="prevEntry" onclick="goToEntry(-1)">◀ Prev</button>
+        <span class="frame-info" id="entryInfo"></span>
+        <button class="nav-btn" id="nextEntry" onclick="goToEntry(1)">Next ▶</button>
+        <span class="frame-info" id="progressInfo" style="color:#6bff6b; margin-left:12px"></span>
+      </div>
+      <!-- Row 2: Jump to + Search + Filter -->
+      <div style="display:flex; flex-wrap:wrap; gap:8px; align-items:center; margin-top:8px">
+        <span style="font-size:11px; color:#999">JUMP TO #</span>
+        <input id="jumpTo" class="hex" style="width:56px" placeholder="000" maxlength="4"
+          onkeydown="if(event.key==='Enter') jumpToEntry()">
+        <button class="nav-btn" onclick="jumpToEntry()">Go</button>
+        <span style="font-size:11px; color:#999; margin-left:8px">SEARCH</span>
+        <input id="searchBox" style="width:160px; padding:4px 6px; background:#2a2a2a; color:#e0e0e0;
+          border:1px solid #444; border-radius:4px; font-family:'Courier New',monospace; font-size:12px"
+          placeholder="Search JP or EN text..." oninput="filterEntries()">
+        <button class="nav-btn" onclick="clearSearch()">✕</button>
+      </div>
+      <!-- Row 3: Filter buttons -->
+      <div style="display:flex; flex-wrap:wrap; gap:6px; margin-top:8px">
+        <button class="code-btn filter-btn" id="filterAll" onclick="setFilter('all')">All</button>
+        <button class="code-btn filter-btn" id="filterUntranslated" onclick="setFilter('untranslated')">Untranslated</button>
+        <button class="code-btn filter-btn" id="filterTranslated" onclick="setFilter('translated')">Translated</button>
+        <button class="code-btn filter-btn" id="filterErrors" onclick="setFilter('errors')">Has Errors</button>
+      </div>
+      <!-- Row 4: Filtered results list -->
+      <div id="entryList" style="display:none; margin-top:8px; max-height:180px; overflow-y:auto;
+        background:#1a1a1a; border:1px solid #333; border-radius:4px; padding:4px"></div>
+    </div>
+  </div>
+
+  <div class="controls">
+    <label class="section">INSERT CONTROL CODES</label>
+    <div class="btn-row" id="codeButtons"></div>
+
+    <div class="face-row">
+      <span>FACE:</span>
+      <input class="hex" id="faceId" placeholder="ID" maxlength="2">
+      <input class="hex" id="faceExpr" placeholder="Expr" maxlength="2">
+      <button class="code-btn" onclick="insertFace()">Insert Face</button>
+    </div>
+  </div>
+
+  <div class="stats" id="stats"></div>
+  <div id="errorBox" style="display:none"></div>
+
+  <div class="preview">
+    <label class="section">TEXT BOX PREVIEW</label>
+    <div style="margin-top:8px">
+      <canvas id="textbox" width="320" height="80"></canvas>
+    </div>
+    <div class="nav" id="nav" style="display:none">
+      <button class="nav-btn" id="prevBtn" onclick="prevFrame()">◀ Prev</button>
+      <span class="frame-info" id="frameInfo"></span>
+      <button class="nav-btn" id="nextBtn" onclick="nextFrame()">Next ▶</button>
+    </div>
+  </div>
+
+  <div class="reference">
+    <b>QUICK REFERENCE</b>
+    <div class="ref-grid">
+      <span>Max chars/line: 13 (incl. spaces)</span>
+      <span>Max lines/frame: 3</span>
+      <span>Line break: Enter key</span>
+      <span>Page break: ▼ (FC byte)</span>
+      <span>[E0],[E2]-[E8] = ~5 chars wide</span>
+      <span>[E1] Car Name = up to 13 chars</span>
+      <span>&lt;FACE:XX,YY&gt; = NPC portrait</span>
+      <span>&lt;STOP&gt; = FF terminator</span>
+      <span>[END] = end of text block (FD)</span>
+      <span>▼ = continue text marker (FC)</span>
+    </div>
+    <div style="margin-top:10px; padding-top:8px; border-top:1px solid #333">
+      <b style="color:#f0a030">EDGE CASES (not checked by validator)</b>
+      <div style="margin-top:4px; line-height:1.6">
+        <span>• Location name boxes: max <b style="color:#7ec8e3">10</b> characters</span><br>
+        <span>• Shop/Mods/List menus (item names, sub-categories, descriptions): max <b style="color:#7ec8e3">13</b> characters</span>
+      </div>
+    </div>
+  </div>
+</div>
+
+<script>
+const MAX_CHARS = 13;
+const MAX_LINES = 3;
+let currentFrame = 0;
+
+const CODES = [
+  { label: "▼ Page Break", code: "\n▼\n", desc: "Wait for button, advance to next frame" },
+  { label: "[E0] Player Name", code: "[E0]", desc: "Player name reference (5 chars wide)" },
+  { label: "[E1] Car Name", code: "[E1]", desc: "Player's Choro-Q car name" },
+  { label: "[E2] Player Bet", code: "[E2]", desc: "Item bet by player during practice race" },
+  { label: "[E3] Opp. Bet", code: "[E3]", desc: "Item bet by opponent during practice race" },
+  { label: "[E4] Gold", code: "[E4]", desc: "Current player gold" },
+  { label: "[E5] Remaining", code: "[E5]", desc: "Remaining gold after purchase" },
+  { label: "[E6] 2P Name", code: "[E6]", desc: "Other player name during 2P link race" },
+  { label: "[E7] P1 Wins", code: "[E7]", desc: "Player's # of wins during 2P link race" },
+  { label: "[E8] P2 Wins", code: "[E8]", desc: "Opponent's # of wins during 2P link race" },
+  { label: "[END]", code: "\n[END]", desc: "End of text block (FD)" },
+  { label: "<STOP>", code: "[STOP]", desc: "FF terminator" },
+];
+
+// Build control code buttons
+const btnRow = document.getElementById('codeButtons');
+CODES.forEach(cc => {
+  const btn = document.createElement('button');
+  btn.className = 'code-btn';
+  btn.textContent = cc.label;
+  btn.title = cc.desc;
+  btn.onclick = () => insertCode(cc.code);
+  btnRow.appendChild(btn);
+});
+
+function insertCode(code) {
+  const ta = document.getElementById('english');
+  const start = ta.selectionStart;
+  const end = ta.selectionEnd;
+  const text = ta.value;
+  ta.value = text.slice(0, start) + code + text.slice(end);
+  ta.selectionStart = ta.selectionEnd = start + code.length;
+  ta.focus();
+  update();
+}
+
+function insertFace() {
+  const id = document.getElementById('faceId').value.toUpperCase();
+  const expr = document.getElementById('faceExpr').value.toUpperCase();
+  if (id && expr) insertCode(`<FACE:${id},${expr}>`);
+}
+
+// Auto-uppercase
+document.getElementById('english').addEventListener('input', function() {
+  const pos = this.selectionStart;
+  const val = this.value;
+  // Uppercase only outside control codes
+  let result = '';
+  let i = 0;
+  while (i < val.length) {
+    if (val[i] === '[' || val[i] === '<') {
+      const close = val[i] === '[' ? ']' : '>';
+      const end = val.indexOf(close, i);
+      if (end !== -1) {
+        result += val.slice(i, end + 1).toUpperCase();
+        i = end + 1;
+        continue;
+      }
+    }
+    result += val[i].toUpperCase();
+    i++;
+  }
+  if (result !== val) {
+    this.value = result;
+    this.selectionStart = this.selectionEnd = pos;
+  }
+  update();
+});
+
+document.getElementById('japanese').addEventListener('input', update);
+
+function parseFrames(text) {
+  return text.split('▼').map(f => f.replace(/^\n/, '').replace(/\n$/, ''));
+}
+
+function tokenizeLine(line) {
+  const tokens = [];
+  let i = 0;
+  while (i < line.length) {
+    if (line[i] === '[') {
+      const end = line.indexOf(']', i);
+      if (end !== -1) { tokens.push(line.slice(i, end + 1)); i = end + 1; continue; }
+    }
+    if (line[i] === '<' && line.slice(i, i + 6) === '<FACE:') {
+      const end = line.indexOf('>', i);
+      if (end !== -1) { tokens.push(line.slice(i, end + 1)); i = end + 1; continue; }
+    }
+    tokens.push(line[i]);
+    i++;
+  }
+  return tokens;
+}
+
+function tokenWidth(t) {
+  if (t === '[E1]') return 13; // car name is up to 13 chars
+  if (t.startsWith('[E')) return 5;
+  if (t.startsWith('<FACE:')) return 0;
+  return t.length;
+}
+
+function validate(text) {
+  const frames = parseFrames(text);
+  const errors = [];
+  frames.forEach((f, fi) => {
+    const lines = f.split('\n').filter(l => l.trim() !== '');
+    if (lines.length > MAX_LINES) {
+      errors.push(`Frame ${fi+1}: ${lines.length} lines (max ${MAX_LINES})`);
+    }
+    lines.forEach((line, li) => {
+      const tokens = tokenizeLine(line);
+      let w = 0;
+      tokens.forEach(t => w += tokenWidth(t));
+      if (w > MAX_CHARS) {
+        errors.push(`Frame ${fi+1}, Line ${li+1}: ${w} chars (max ${MAX_CHARS})`);
+      }
+    });
+  });
+  return errors;
+}
+
+function countBytes(text) {
+  let count = 0;
+  let i = 0;
+  while (i < text.length) {
+    if (text[i] === '[') {
+      const end = text.indexOf(']', i);
+      if (end !== -1) { count += 1; i = end + 1; continue; }
+    }
+    if (text[i] === '<' && text.slice(i, i + 6) === '<FACE:') {
+      count += 4; i = text.indexOf('>', i) + 1; continue;
+    }
+    if (text[i] === '▼') { count += 1; i++; continue; }
+    if (text[i] === '\n') { count += 1; i++; continue; }
+    count += 1; i++;
+  }
+  return count + 2; // FD FF
+}
+
+// Pixel font (6px wide glyphs)
+const FONT = {};
+const glyphs = {
+  A: ["  ██  "," █  █ ","██  ██","██  ██","██████","██  ██","██  ██"],
+  B: ["█████ ","██  ██","██  ██","█████ ","██  ██","██  ██","█████ "],
+  C: [" ████ ","██  ██","██    ","██    ","██    ","██  ██"," ████ "],
+  D: ["█████ ","██  ██","██  ██","██  ██","██  ██","██  ██","█████ "],
+  E: ["██████","██    ","██    ","████  ","██    ","██    ","██████"],
+  F: ["██████","██    ","██    ","████  ","██    ","██    ","██    "],
+  G: [" ████ ","██  ██","██    ","██ ███","██  ██","██  ██"," ████ "],
+  H: ["██  ██","██  ██","██  ██","██████","██  ██","██  ██","██  ██"],
+  I: [" ████ ","  ██  ","  ██  ","  ██  ","  ██  ","  ██  "," ████ "],
+  J: ["  ████","    ██","    ██","    ██","██  ██","██  ██"," ████ "],
+  K: ["██  ██","██ ██ ","████  ","███   ","████  ","██ ██ ","██  ██"],
+  L: ["██    ","██    ","██    ","██    ","██    ","██    ","██████"],
+  M: ["██  ██","██████","██████","██ ███","██  ██","██  ██","██  ██"],
+  N: ["██  ██","███ ██","██████","██████","██ ███","██  ██","██  ██"],
+  O: [" ████ ","██  ██","██  ██","██  ██","██  ██","██  ██"," ████ "],
+  P: ["█████ ","██  ██","██  ██","█████ ","██    ","██    ","██    "],
+  Q: [" ████ ","██  ██","██  ██","██  ██","██ ███","██ ██ "," ██ ██"],
+  R: ["█████ ","██  ██","██  ██","█████ ","████  ","██ ██ ","██  ██"],
+  S: [" ████ ","██  ██","███   "," ████ ","   ███","██  ██"," ████ "],
+  T: ["██████","  ██  ","  ██  ","  ██  ","  ██  ","  ██  ","  ██  "],
+  U: ["██  ██","██  ██","██  ██","██  ██","██  ██","██  ██"," ████ "],
+  V: ["██  ██","██  ██","██  ██","██  ██","██  ██"," ████ ","  ██  "],
+  W: ["██  ██","██  ██","██  ██","██ ███","██████","██████","██  ██"],
+  X: ["██  ██","██  ██"," ████ ","  ██  "," ████ ","██  ██","██  ██"],
+  Y: ["██  ██","██  ██"," ████ ","  ██  ","  ██  ","  ██  ","  ██  "],
+  Z: ["██████","   ██ ","  ██  "," ██   ","██    ","██    ","██████"],
+  "0": [" ████ ","██  ██","██ ███","██████","███ ██","██  ██"," ████ "],
+  "1": ["  ██  "," ███  ","  ██  ","  ██  ","  ██  ","  ██  "," ████ "],
+  "2": [" ████ ","██  ██","    ██","  ███ "," ██   ","██    ","██████"],
+  "3": [" ████ ","██  ██","    ██","  ███ ","    ██","██  ██"," ████ "],
+  "4": ["██  ██","██  ██","██  ██","██████","    ██","    ██","    ██"],
+  "5": ["██████","██    ","█████ ","    ██","    ██","██  ██"," ████ "],
+  "6": [" ████ ","██    ","██    ","█████ ","██  ██","██  ██"," ████ "],
+  "7": ["██████","    ██","   ██ ","  ██  "," ██   "," ██   "," ██   "],
+  "8": [" ████ ","██  ██","██  ██"," ████ ","██  ██","██  ██"," ████ "],
+  "9": [" ████ ","██  ██","██  ██"," █████","    ██","    ██"," ████ "],
+  " ": ["      ","      ","      ","      ","      ","      ","      "],
+  "!": ["  ██  ","  ██  ","  ██  ","  ██  ","  ██  ","      ","  ██  "],
+  "?": [" ████ ","██  ██","   ██ ","  ██  ","  ██  ","      ","  ██  "],
+  ".": ["      ","      ","      ","      ","      ","      ","  ██  "],
+  ",": ["      ","      ","      ","      ","      ","  ██  "," ██   "],
+  "-": ["      ","      ","      ","████  ","      ","      ","      "],
+  "'": ["  ██  ","  ██  "," ██   ","      ","      ","      ","      "],
+  "/": ["    ██","   ██ ","  ██  "," ██   ","██    ","██    ","      "],
+  "(": ["  ██  "," ██   ","██    ","██    ","██    "," ██   ","  ██  "],
+  ")": ["  ██  ","   ██ ","    ██","    ██","    ██","   ██ ","  ██  "],
+  "&": [" ██   ","██ █  ","██ █  "," ██   ","██ █ █","██  █ "," ██ ██"],
+  "*": ["      "," █ █  ","  █   ","█████ ","  █   "," █ █  ","      "],
+  "_": ["      ","      ","      ","██████","      ","      ","      "],
+  "▼": ["      ","      ","██████"," ████ ","  ██  ","      ","      "],
+};
+Object.entries(glyphs).forEach(([ch, rows]) => {
+  FONT[ch] = rows.map(r => {
+    const px = [];
+    for (let i = 0; i < 6; i++) px.push(r[i] === '█' ? 1 : 0);
+    return px;
+  });
+});
+
+function renderLine(line) {
+  const tokens = tokenizeLine(line);
+  const chars = [];
+  tokens.forEach(t => {
+    if (t === '[E1]') { for (let i = 0; i < 13; i++) chars.push('?'); }
+    else if (t.startsWith('[E')) { for (let i = 0; i < 5; i++) chars.push('_'); }
+    else if (t.startsWith('<FACE:')) { /* skip */ }
+    else chars.push(t.toUpperCase());
+  });
+
+  const pixels = [];
+  for (let row = 0; row < 7; row++) {
+    const rowPx = [];
+    chars.forEach(ch => {
+      const g = FONT[ch] || FONT['?'];
+      if (g && g[row]) { rowPx.push(...g[row]); rowPx.push(0); }
+    });
+    pixels.push(rowPx);
+  }
+  return pixels;
+}
+
+function drawPreview() {
+  const canvas = document.getElementById('textbox');
+  const ctx = canvas.getContext('2d');
+  const scale = 2;
+  const boxW = 160, boxH = 40;
+  canvas.width = boxW * scale;
+  canvas.height = boxH * scale;
+
+  ctx.fillStyle = '#e8e0d0';
+  ctx.fillRect(0, 0, canvas.width, canvas.height);
+
+  ctx.strokeStyle = '#2a2a2a';
+  ctx.lineWidth = scale;
+  ctx.strokeRect(scale/2, scale/2, canvas.width - scale, canvas.height - scale);
+
+  ctx.strokeStyle = '#6a6a6a';
+  ctx.lineWidth = 1;
+  ctx.strokeRect(scale*2, scale*2, canvas.width - scale*4, canvas.height - scale*4);
+
+  const text = document.getElementById('english').value;
+  const frames = parseFrames(text);
+  if (currentFrame >= frames.length) currentFrame = Math.max(0, frames.length - 1);
+
+  const frame = frames[currentFrame] || '';
+  const lines = frame.split('\n').filter(l => l.trim() !== '');
+
+  lines.forEach((line, li) => {
+    if (li >= MAX_LINES) return;
+    const pixels = renderLine(line);
+    const yOff = 4 + li * 11;
+    const xOff = 6;
+    pixels.forEach((row, ry) => {
+      row.forEach((px, rx) => {
+        if (px) {
+          ctx.fillStyle = '#1a1a1a';
+          ctx.fillRect((xOff + rx) * scale, (yOff + ry) * scale, scale, scale);
+        }
+      });
+    });
+  });
+
+  if (currentFrame < frames.length - 1) {
+    const arrowY = boxH - 8, arrowX = boxW - 14;
+    const ap = FONT['▼'];
+    if (ap) ap.forEach((row, ry) => {
+      row.forEach((px, rx) => {
+        if (px) {
+          ctx.fillStyle = '#1a1a1a';
+          ctx.fillRect((arrowX+rx)*scale, (arrowY+ry)*scale, scale, scale);
+        }
+      });
+    });
+  }
+
+  // Nav
+  const nav = document.getElementById('nav');
+  if (frames.length > 1) {
+    nav.style.display = 'flex';
+    document.getElementById('frameInfo').textContent = `Frame ${currentFrame+1} / ${frames.length}`;
+    document.getElementById('prevBtn').disabled = currentFrame === 0;
+    document.getElementById('nextBtn').disabled = currentFrame === frames.length - 1;
+  } else {
+    nav.style.display = 'none';
+  }
+}
+
+function prevFrame() { if (currentFrame > 0) { currentFrame--; drawPreview(); } }
+function nextFrame() {
+  const frames = parseFrames(document.getElementById('english').value);
+  if (currentFrame < frames.length - 1) { currentFrame++; drawPreview(); }
+}
+
+function update() {
+  const text = document.getElementById('english').value;
+  const frames = parseFrames(text);
+  const errors = validate(text);
+  const bytes = countBytes(text);
+
+  document.getElementById('stats').innerHTML =
+    `<span>Frames: <b class="info">${frames.length}</b></span>` +
+    `<span>Est. bytes: <b class="info">${bytes}</b></span>` +
+    `<span>Errors: <b class="${errors.length ? 'err' : 'ok'}">${errors.length}</b></span>`;
+
+  const errBox = document.getElementById('errorBox');
+  if (errors.length) {
+    errBox.style.display = 'block';
+    errBox.className = 'errors';
+    errBox.innerHTML = errors.map(e => `<div>⚠ ${e}</div>`).join('');
+  } else {
+    errBox.style.display = 'none';
+  }
+
+  currentFrame = 0;
+  drawPreview();
+}
+
+// =============================================
+// FILE MANAGEMENT
+// =============================================
+
+// In-memory storage for the full translation file
+let fileEntries = []; // array of {index, header, japanese, english}
+let currentEntryIndex = 0;
+let fileName = 'translation.txt';
+
+function buildFile() {
+  // Open file picker to load a fresh extraction dump
+  document.getElementById('fileInput').click();
+}
+
+function importSave() {
+  // Open file picker to load a previously saved work file
+  document.getElementById('saveInput').click();
+}
+
+function loadFile(event) {
+  const file = event.target.files[0];
+  if (!file) return;
+  fileName = file.name;
+
+  const reader = new FileReader();
+  reader.onload = function(e) {
+    const content = e.target.result;
+    parseTranslationFile(content);
+    if (fileEntries.length > 0) {
+      currentEntryIndex = 0;
+      displayEntry(currentEntryIndex);
+      updateEntryNav();
+    }
+  };
+  reader.readAsText(file);
+  // Reset so the same file can be re-loaded
+  event.target.value = '';
+}
+
+function parseTranslationFile(content) {
+  fileEntries = [];
+  // Split on entry headers
+  const entryPattern = /={50,}\nTEXT ENTRY #(\d{3}).*?\n={50,}\n([\s\S]*?)(?=\n={50,}\nTEXT ENTRY|\n={50,}\s*$|$)/g;
+  let match;
+  while ((match = entryPattern.exec(content)) !== null) {
+    const idx = parseInt(match[1]);
+    const body = match[2];
+
+    // Extract sections
+    const jpMatch = body.match(/--- JAPANESE ---\n([\s\S]*?)(?=\n--- ENGLISH|$)/);
+    const enMatch = body.match(/--- ENGLISH ---\n([\s\S]*?)$/);
+
+    // Everything before --- JAPANESE --- is the header (info, pointers, raw bytes)
+    const headerMatch = body.match(/^([\s\S]*?)(?=--- JAPANESE ---|$)/);
+
+    fileEntries.push({
+      index: idx,
+      header: headerMatch ? headerMatch[1].trim() : '',
+      japanese: jpMatch ? jpMatch[1].trim() : '',
+      english: enMatch ? enMatch[1].trim() : '[Enter your translation here]',
+    });
+  }
+
+  if (fileEntries.length === 0) {
+    alert('No TEXT ENTRY blocks found in file. Make sure the file uses the standard extraction format.');
+    return;
+  }
+
+  alert(`Loaded ${fileEntries.length} entries from ${fileName}`);
+}
+
+function displayEntry(idx) {
+  if (idx < 0 || idx >= fileEntries.length) return;
+  const entry = fileEntries[idx];
+  document.getElementById('japanese').value = entry.japanese;
+  const eng = entry.english === '[Enter your translation here]' ? '' : entry.english;
+  document.getElementById('english').value = eng;
+  update();
+}
+
+function saveCurrentEntry() {
+  if (fileEntries.length === 0) return;
+  const eng = document.getElementById('english').value.trim();
+  fileEntries[currentEntryIndex].english = eng || '[Enter your translation here]';
+}
+
+let currentFilter = 'all';
+let filteredIndices = []; // indices into fileEntries that match current filter/search
+
+function jumpToEntry() {
+  const input = document.getElementById('jumpTo').value.trim();
+  const num = parseInt(input);
+  if (isNaN(num)) return;
+
+  // Find by entry index number (not array position)
+  const pos = fileEntries.findIndex(e => e.index === num);
+  if (pos !== -1) {
+    saveCurrentEntry();
+    currentEntryIndex = pos;
+    displayEntry(currentEntryIndex);
+    updateEntryNav();
+    refreshEntryList();
+  } else {
+    alert(`Entry #${num} not found`);
+  }
+}
+
+function setFilter(filter) {
+  currentFilter = filter;
+  // Update active button style
+  ['All', 'Untranslated', 'Translated', 'Errors'].forEach(f => {
+    const btn = document.getElementById('filter' + f);
+    btn.classList.toggle('active', f.toLowerCase() === filter);
+  });
+  filterEntries();
+}
+
+function filterEntries() {
+  const search = document.getElementById('searchBox').value.toLowerCase();
+  filteredIndices = [];
+
+  fileEntries.forEach((entry, i) => {
+    const isTranslated = entry.english !== '[Enter your translation here]' && entry.english.trim() !== '';
+    const hasErrors = isTranslated ? validate(entry.english).length > 0 : false;
+
+    // Apply status filter
+    if (currentFilter === 'untranslated' && isTranslated) return;
+    if (currentFilter === 'translated' && !isTranslated) return;
+    if (currentFilter === 'errors' && !hasErrors) return;
+
+    // Apply search
+    if (search) {
+      const jpMatch = entry.japanese.toLowerCase().includes(search);
+      const enMatch = entry.english.toLowerCase().includes(search);
+      const numMatch = String(entry.index).padStart(3, '0').includes(search);
+      if (!jpMatch && !enMatch && !numMatch) return;
+    }
+
+    filteredIndices.push(i);
+  });
+
+  refreshEntryList();
+}
+
+function clearSearch() {
+  document.getElementById('searchBox').value = '';
+  filterEntries();
+}
+
+function refreshEntryList() {
+  const listDiv = document.getElementById('entryList');
+
+  if (filteredIndices.length === 0 && (currentFilter !== 'all' || document.getElementById('searchBox').value)) {
+    listDiv.style.display = 'block';
+    listDiv.innerHTML = '<div style="padding:8px; color:#666; font-size:11px">No matching entries</div>';
+    return;
+  }
+
+  if (filteredIndices.length === fileEntries.length && !document.getElementById('searchBox').value) {
+    listDiv.style.display = 'none';
+    return;
+  }
+
+  listDiv.style.display = 'block';
+  listDiv.innerHTML = '';
+
+  // Limit display to 200 entries for performance
+  const display = filteredIndices.slice(0, 200);
+
+  display.forEach(i => {
+    const entry = fileEntries[i];
+    const isTranslated = entry.english !== '[Enter your translation here]' && entry.english.trim() !== '';
+    const preview = isTranslated
+      ? entry.english.replace(/\n/g, ' ').substring(0, 50)
+      : entry.japanese.replace(/\n/g, ' ').substring(0, 50);
+    const status = isTranslated ? '✓' : '○';
+    const statusColor = isTranslated ? '#6bff6b' : '#666';
+
+    const div = document.createElement('div');
+    div.className = 'entry-item' + (i === currentEntryIndex ? ' current' : '');
+    div.innerHTML =
+      `<span class="entry-status" style="color:${statusColor}">${status}</span>` +
+      `<span class="entry-num">#${String(entry.index).padStart(3, '0')}</span>` +
+      `<span class="entry-preview">${escapeHtml(preview)}</span>`;
+    div.onclick = () => {
+      saveCurrentEntry();
+      currentEntryIndex = i;
+      displayEntry(currentEntryIndex);
+      updateEntryNav();
+      refreshEntryList();
+    };
+    listDiv.appendChild(div);
+  });
+
+  if (filteredIndices.length > 200) {
+    const more = document.createElement('div');
+    more.style.cssText = 'padding:4px 8px; color:#666; font-size:10px';
+    more.textContent = `...and ${filteredIndices.length - 200} more. Narrow your search.`;
+    listDiv.appendChild(more);
+  }
+}
+
+function escapeHtml(text) {
+  const div = document.createElement('div');
+  div.textContent = text;
+  return div.innerHTML;
+}
+
+function goToEntry(direction) {
+  if (fileEntries.length === 0) return;
+  saveCurrentEntry();
+  currentEntryIndex += direction;
+  if (currentEntryIndex < 0) currentEntryIndex = 0;
+  if (currentEntryIndex >= fileEntries.length) currentEntryIndex = fileEntries.length - 1;
+  displayEntry(currentEntryIndex);
+  updateEntryNav();
+}
+
+function updateEntryNav() {
+  const nav = document.getElementById('entryNav');
+  if (fileEntries.length > 0) {
+    nav.style.display = 'block';
+    const entry = fileEntries[currentEntryIndex];
+    document.getElementById('entryInfo').textContent =
+      `Entry #${String(entry.index).padStart(3,'0')} (${currentEntryIndex+1} / ${fileEntries.length})`;
+    document.getElementById('prevEntry').disabled = currentEntryIndex === 0;
+    document.getElementById('nextEntry').disabled = currentEntryIndex === fileEntries.length - 1;
+
+    const translated = fileEntries.filter(e => e.english !== '[Enter your translation here]' && e.english.trim() !== '').length;
+    document.getElementById('progressInfo').textContent = `Translated: ${translated} / ${fileEntries.length}`;
+
+    // Set initial filter
+    if (filteredIndices.length === 0) setFilter('all');
+  } else {
+    nav.style.display = 'none';
+  }
+}
+
+function saveToFile() {
+  if (fileEntries.length === 0) {
+    alert('No file loaded. Use "Import New Dump" or "Open Saved File" first.');
+    return;
+  }
+  saveCurrentEntry();
+  const content = buildFileContent();
+  const blob = new Blob([content], { type: 'text/plain; charset=utf-8' });
+  const url = URL.createObjectURL(blob);
+  const a = document.createElement('a');
+  a.href = url;
+  a.download = fileName;
+  a.click();
+  URL.revokeObjectURL(url);
+  alert(`Saved ${fileName}`);
+}
+
+function buildFileContent() {
+  let output = '';
+  fileEntries.forEach(entry => {
+    output += '='.repeat(70) + '\n';
+    output += `TEXT ENTRY #${String(entry.index).padStart(3,'0')}\n`;
+    output += '='.repeat(70) + '\n';
+    output += entry.header + '\n';
+    output += '--- JAPANESE ---\n';
+    output += entry.japanese + '\n';
+    output += '--- ENGLISH ---\n';
+    output += entry.english + '\n';
+    output += '\n';
+  });
+  return output;
+}
+
+// Init
+update();
+</script>
+
+</body>
+</html>
