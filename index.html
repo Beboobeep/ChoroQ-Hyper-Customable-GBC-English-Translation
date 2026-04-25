@@ -366,7 +366,7 @@ const MAX_LINES = 3;
 let currentFrame = 0;
 
 const CODES = [
-  { label: "▼ Page Break", code: "\n▼\n", desc: "Wait for button, advance to next frame" },
+  { label: "▼ Page Break", code: "▼", desc: "Wait for button, advance to next frame" },
   { label: "[E0] Player Name", code: "[E0]", desc: "Player name reference (5 chars wide)" },
   { label: "[E1] Car Name", code: "[E1]", desc: "Player's Choro-Q car name (up to 13 chars)" },
   { label: "[E2] Player Bet", code: "[E2]", desc: "Item bet by player during practice race (up to 13 chars)" },
@@ -376,7 +376,7 @@ const CODES = [
   { label: "[E6] 2P Name", code: "[E6]", desc: "Other player name during 2P link race" },
   { label: "[E7] P1 Wins", code: "[E7]", desc: "Player's # of wins during 2P link race" },
   { label: "[E8] P2 Wins", code: "[E8]", desc: "Opponent's # of wins during 2P link race" },
-  { label: "[END]", code: "\n[END]", desc: "End of text block (FD)" },
+  { label: "[END]", code: "[END]", desc: "End of text block (FD)" },
   { label: "<STOP>", code: "<STOP>", desc: "FF terminator (required at end of every translation)" },
 ];
 
