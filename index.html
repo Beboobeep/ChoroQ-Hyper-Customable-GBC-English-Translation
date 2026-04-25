@@ -719,30 +719,76 @@ function loadFile(event) {
 
 function parseTranslationFile(content) {
   fileEntries = [];
-  // Split on entry headers
-  const entryPattern = /={50,}\nTEXT ENTRY #(\d{3}).*?\n={50,}\n([\s\S]*?)(?=\n={50,}\nTEXT ENTRY|\n={50,}\s*$|$)/g;
-  let match;
-  while ((match = entryPattern.exec(content)) !== null) {
-    const idx = parseInt(match[1]);
-    const body = match[2];
-
-    // Extract sections
-    const jpMatch = body.match(/--- JAPANESE ---\n([\s\S]*?)(?=\n--- ENGLISH|$)/);
-    const enMatch = body.match(/--- ENGLISH ---\n([\s\S]*?)$/);
-
-    // Everything before --- JAPANESE --- is the header (info, pointers, raw bytes)
-    const headerMatch = body.match(/^([\s\S]*?)(?=--- JAPANESE ---|$)/);
-
-    fileEntries.push({
-      index: idx,
-      header: headerMatch ? headerMatch[1].trim() : '',
-      japanese: jpMatch ? jpMatch[1].trim() : '',
-      english: enMatch ? enMatch[1].trim() : '[Enter your translation here]',
-    });
+  // Split by the separator lines to find each block
+  // Format: ===...=== \n TEXT BLOCK #XXXX \n ===...=== \n ... \n --- JAPANESE --- \n ... \n --- \n --- ENGLISH TRANSLATION --- \n ... \n ---
+  const blocks = content.split(/={50,}/);
+  
+  let i = 0;
+  while (i < blocks.length) {
+    const block = blocks[i].trim();
+    
+    // Look for "TEXT BLOCK #XXXX" or "TEXT ENTRY #XXX"
+    const idMatch = block.match(/TEXT (?:BLOCK|ENTRY) #(\d+)/);
+    if (idMatch && i + 1 < blocks.length) {
+      const idx = parseInt(idMatch[1]);
+      const body = blocks[i + 1]; // The content block follows the header block
+      
+      // Extract header (pointer info, raw bytes)
+      const jpMarker = body.indexOf('--- JAPANESE ---');
+      const enMarker = body.indexOf('--- ENGLISH TRANSLATION ---') !== -1 
+        ? body.indexOf('--- ENGLISH TRANSLATION ---') 
+        : body.indexOf('--- ENGLISH ---');
+      
+      let header = '';
+      let japanese = '';
+      let english = '';
+      
+      if (jpMarker !== -1) {
+        header = body.substring(0, jpMarker).trim();
+        
+        if (enMarker !== -1) {
+          // Japanese is between --- JAPANESE --- and the --- before ENGLISH
+          let jpSection = body.substring(jpMarker + '--- JAPANESE ---'.length, enMarker);
+          // Remove trailing ---
+          jpSection = jpSection.replace(/\n---\s*$/, '').trim();
+          japanese = jpSection;
+          
+          // English marker length
+          const enMarkerText = body.indexOf('--- ENGLISH TRANSLATION ---') !== -1 
+            ? '--- ENGLISH TRANSLATION ---' 
+            : '--- ENGLISH ---';
+          let enSection = body.substring(enMarker + enMarkerText.length);
+          // Remove trailing ---
+          enSection = enSection.replace(/\n---\s*$/, '').trim();
+          english = enSection || '[Enter your translation here]';
+        } else {
+          // No english section
+          let jpSection = body.substring(jpMarker + '--- JAPANESE ---'.length);
+          jpSection = jpSection.replace(/\n---\s*$/, '').trim();
+          japanese = jpSection;
+          english = '[Enter your translation here]';
+        }
+      } else {
+        header = body.trim();
+        english = '[Enter your translation here]';
+      }
+      
+      fileEntries.push({
+        index: idx,
+        header: header,
+        japanese: japanese,
+        english: english,
+      });
+      
+      i += 2; // Skip past header + body
+      continue;
+    }
+    
+    i++;
   }
 
   if (fileEntries.length === 0) {
-    alert('No TEXT ENTRY blocks found in file. Make sure the file uses the standard extraction format.');
+    alert('No TEXT BLOCK or TEXT ENTRY sections found in file.');
     return;
   }
 
@@ -935,15 +981,22 @@ function saveToFile() {
 
 function buildFileContent() {
   let output = '';
+  // Preserve any header comments from the original file
+  output += '# Choro Q - Hyper Customable GBC\n';
+  output += `# Total blocks: ${fileEntries.length}\n`;
+  output += '# ' + '='.repeat(76) + '\n\n';
+  
   fileEntries.forEach(entry => {
-    output += '='.repeat(70) + '\n';
-    output += `TEXT ENTRY #${String(entry.index).padStart(3,'0')}\n`;
-    output += '='.repeat(70) + '\n';
+    output += '='.repeat(80) + '\n';
+    output += `TEXT BLOCK #${String(entry.index).padStart(4,'0')}\n`;
+    output += '='.repeat(80) + '\n';
     output += entry.header + '\n';
     output += '--- JAPANESE ---\n';
     output += entry.japanese + '\n';
-    output += '--- ENGLISH ---\n';
+    output += '---\n';
+    output += '--- ENGLISH TRANSLATION ---\n';
     output += entry.english + '\n';
+    output += '---\n';
     output += '\n';
   });
   return output;
