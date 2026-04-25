@@ -449,7 +449,7 @@ function tokenizeLine(line) {
       const end = line.indexOf(']', i);
       if (end !== -1) { tokens.push(line.slice(i, end + 1)); i = end + 1; continue; }
     }
-    if (line[i] === '<' && line.slice(i, i + 6) === '<FACE:') {
+    if (line[i] === '<') {
       const end = line.indexOf('>', i);
       if (end !== -1) { tokens.push(line.slice(i, end + 1)); i = end + 1; continue; }
     }
@@ -649,7 +649,12 @@ function drawPreview() {
 
   lines.forEach((line, li) => {
     if (li >= MAX_LINES) return;
-    const {pixels, colors} = renderLine(line);
+    // If this is the last line and there's a next frame, append ▼ inline
+    let displayLine = line;
+    if (li === lines.length - 1 && currentFrame < frames.length - 1) {
+      displayLine = line + '▼';
+    }
+    const {pixels, colors} = renderLine(displayLine);
     const yOff = 4 + li * 11;
     const xOff = 6;
     pixels.forEach((row, ry) => {
@@ -662,19 +667,6 @@ function drawPreview() {
       });
     });
   });
-
-  if (currentFrame < frames.length - 1) {
-    const arrowY = boxH - 8, arrowX = boxW - 14;
-    const ap = FONT['▼'];
-    if (ap) ap.forEach((row, ry) => {
-      row.forEach((px, rx) => {
-        if (px) {
-          ctx.fillStyle = '#1a1a1a';
-          ctx.fillRect((arrowX+rx)*scale, (arrowY+ry)*scale, scale, scale);
-        }
-      });
-    });
-  }
 
   // Nav
   const nav = document.getElementById('nav');
