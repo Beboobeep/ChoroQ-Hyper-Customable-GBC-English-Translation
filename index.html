@@ -29,18 +29,22 @@
     background-size: contain;
     background-position: center top;
     background-repeat: no-repeat;
-    background-color: transparent;
+    background-color: #0a0a0a;
     image-rendering: pixelated;
     -webkit-image-rendering: pixelated;
-    z-index: -2;
+    z-index: -1;
   }
+
+  /* Center image aspect ratio: 1323/1189 ≈ 1.1127 */
+  /* When contained, image width = min(100vw, 100vh * 1.1127) */
+  /* Left bar width = (100vw - center width) / 2 */
 
   .bg-left {
     position: fixed;
     top: 0;
     left: 0;
     height: 100vh;
-    width: 50vw;
+    width: calc((100vw - min(100vw, 100vh * 1.1127)) / 2);
     background-image: url('bg_left.png');
     background-size: cover;
     background-position: right top;
@@ -55,7 +59,7 @@
     top: 0;
     right: 0;
     height: 100vh;
-    width: 50vw;
+    width: calc((100vw - min(100vw, 100vh * 1.1127)) / 2);
     background-image: url('bg_right.png');
     background-size: cover;
     background-position: left top;
