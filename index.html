@@ -69,6 +69,11 @@
     z-index: -1;
   }
 
+  body.bg-off::before {
+    background-image: none;
+    background-color: #0a0a0a;
+  }
+
   .container {
     max-width: 820px;
     margin: 0 auto;
@@ -279,7 +284,10 @@
 <div class="bg-right"></div>
 
 <div class="container">
-  <h1>CHOROQ HYPER CUSTOMABLE GBC TRANSLATION TOOL</h1>
+  <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:20px">
+    <h1 style="margin-bottom:0">CHOROQ HYPER CUSTOMABLE GBC TRANSLATION TOOL</h1>
+    <button class="code-btn" id="bgToggle" onclick="toggleBg()" style="font-size:10px; padding:3px 8px">🖼 BG: ON</button>
+  </div>
 
   <div class="columns">
     <div class="col">
@@ -301,11 +309,9 @@
   <div class="file-controls">
     <label class="section">FILE MANAGEMENT</label>
     <div class="btn-row" style="margin-top:4px">
-      <button class="code-btn file-btn" onclick="buildFile()">📂 Import New Dump</button>
-      <button class="code-btn file-btn" onclick="importSave()">📄 Open Saved File</button>
+      <button class="code-btn file-btn" onclick="buildFile()">📂 Import File</button>
       <button class="code-btn file-btn" onclick="saveToFile()">💾 Save / Export</button>
       <input type="file" id="fileInput" accept=".txt" style="display:none" onchange="loadFile(event)">
-      <input type="file" id="saveInput" accept=".txt" style="display:none" onchange="loadFile(event)">
     </div>
     <div id="entryNav" style="display:none; margin-top:8px">
       <!-- Row 1: Prev/Next + entry info + progress -->
@@ -761,13 +767,7 @@ let currentEntryIndex = 0;
 let fileName = 'translation.txt';
 
 function buildFile() {
-  // Open file picker to load a fresh extraction dump
   document.getElementById('fileInput').click();
-}
-
-function importSave() {
-  // Open file picker to load a previously saved work file
-  document.getElementById('saveInput').click();
 }
 
 function loadFile(event) {
@@ -1073,6 +1073,15 @@ function buildFileContent() {
     output += '\n';
   });
   return output;
+}
+
+let bgEnabled = true;
+function toggleBg() {
+  bgEnabled = !bgEnabled;
+  document.querySelector('.bg-left').style.display = bgEnabled ? '' : 'none';
+  document.querySelector('.bg-right').style.display = bgEnabled ? '' : 'none';
+  document.body.classList.toggle('bg-off', !bgEnabled);
+  document.getElementById('bgToggle').textContent = bgEnabled ? '🖼 BG: ON' : '🖼 BG: OFF';
 }
 
 // Init
