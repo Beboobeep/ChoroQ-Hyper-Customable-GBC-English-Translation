@@ -379,6 +379,7 @@
     <div class="ref-grid">
       <span>Max chars/line: 13 (incl. spaces)</span>
       <span>Max lines/frame: 3</span>
+      <span>Max total/frame: 30 chars (tilemap limit)</span>
       <span>Line break: Enter key</span>
       <span>Page break: ▼ (FC byte)</span>
       <span>[E0] Player Name = 5 chars</span>
@@ -502,18 +503,33 @@ function validate(text) {
     if (lines.length > MAX_LINES) {
       errors.push(`Frame ${fi+1}: ${lines.length} lines (max ${MAX_LINES})`);
     }
+
+    // Calculate width per line, treating ▼ and [END] as fixed-position
+    // line 3 markers (1 char each, but they sit at a fixed spot)
+    let frameTotalChars = 0;
+    const hasPageBreak = fi < frames.length - 1; // this frame ends with ▼
+
     lines.forEach((line, li) => {
       const tokens = tokenizeLine(line);
       let w = 0;
       tokens.forEach(t => w += tokenWidth(t));
-      // ▼ page break counts as 1 char on the last line of non-final frames
-      if (li === lines.length - 1 && fi < frames.length - 1) {
+
+      // If this is the last line and the frame has a page break after it,
+      // the ▼ occupies 1 char on this line
+      if (li === lines.length - 1 && hasPageBreak) {
         w += 1;
       }
+
       if (w > MAX_CHARS) {
         errors.push(`Frame ${fi+1}, Line ${li+1}: ${w} chars (max ${MAX_CHARS})`);
       }
+      frameTotalChars += w;
     });
+
+    // 30 char total limit per text box (all 3 lines combined including markers)
+    if (frameTotalChars > 30) {
+      errors.push(`Frame ${fi+1}: ${frameTotalChars} total chars (max 30 per text box)`);
+    }
   });
   return errors;
 }
@@ -588,6 +604,34 @@ const glyphs = {
   "&": [" ██   ","██ █  ","██ █  "," ██   ","██ █ █","██  █ "," ██ ██"],
   "*": ["      "," █ █  ","  █   ","█████ ","  █   "," █ █  ","      "],
   "_": ["      ","      ","      ","██████","      ","      ","      "],
+  "「": ["████  ","██    ","██    ","██    ","      ","      ","      "],
+  "」": ["      ","      ","      ","    ██","    ██","    ██","  ████"],
+  "a": ["      ","      "," ████ ","    ██"," █████","██  ██"," █████"],
+  "b": ["██    ","██    ","█████ ","██  ██","██  ██","██  ██","█████ "],
+  "c": ["      ","      "," ████ ","██    ","██    ","██    "," ████ "],
+  "d": ["    ██","    ██"," █████","██  ██","██  ██","██  ██"," █████"],
+  "e": ["      ","      "," ████ ","██  ██","██████","██    "," ████ "],
+  "f": ["  ████","██    ","██    ","████  ","██    ","██    ","██    "],
+  "g": ["      ","      "," █████","██  ██"," █████","    ██"," ████ "],
+  "h": ["██    ","██    ","█████ ","██  ██","██  ██","██  ██","██  ██"],
+  "i": ["  ██  ","      "," ███  ","  ██  ","  ██  ","  ██  "," ████ "],
+  "j": ["    ██","      ","   ███","    ██","    ██","    ██","████  "],
+  "k": ["██    ","██    ","██ ██ ","████  ","████  ","██ ██ ","██  ██"],
+  "l": [" ███  ","  ██  ","  ██  ","  ██  ","  ██  ","  ██  "," ████ "],
+  "m": ["      ","      ","██ ██ ","██████","██████","██ ███","██  ██"],
+  "n": ["      ","      ","█████ ","██  ██","██  ██","██  ██","██  ██"],
+  "o": ["      ","      "," ████ ","██  ██","██  ██","██  ██"," ████ "],
+  "p": ["      ","      ","█████ ","██  ██","█████ ","██    ","██    "],
+  "q": ["      ","      "," █████","██  ██"," █████","    ██","    ██"],
+  "r": ["      ","      ","█████ ","██  ██","██    ","██    ","██    "],
+  "s": ["      ","      "," ████ ","██    "," ████ ","    ██"," ████ "],
+  "t": ["  ██  ","  ██  ","██████","  ██  ","  ██  ","  ██  ","  ████"],
+  "u": ["      ","      ","██  ██","██  ██","██  ██","██  ██"," █████"],
+  "v": ["      ","      ","██  ██","██  ██","██  ██"," ████ ","  ██  "],
+  "w": ["      ","      ","██  ██","██  ██","██ ███","██████","██ ██ "],
+  "x": ["      ","      ","██  ██"," ████ ","  ██  "," ████ ","██  ██"],
+  "y": ["      ","      ","██  ██","██  ██"," █████","    ██"," ████ "],
+  "z": ["      ","      ","██████","   ██ ","  ██  "," ██   ","██████"],
   "▼": ["      ","      ","██████"," ████ ","  ██  ","      ","      "],
   "■": ["██████","██████","██████","██████","██████","██████","██████"],
 };
@@ -600,7 +644,7 @@ Object.entries(glyphs).forEach(([ch, rows]) => {
 });
 
 // Valid characters in the game's encoding (for unknown char detection)
-const VALID_CHARS = new Set("ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789 !?.,'-/()&#*\"~▼■→←▲★♥_");
+const VALID_CHARS = new Set("ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789 !?.,'-/()&#*\"~▼■→←▲★♥_「」");
 
 function renderLine(line) {
   const tokens = tokenizeLine(line);
@@ -616,10 +660,8 @@ function renderLine(line) {
     else if (t.startsWith('[E')) { for (let i = 0; i < 5; i++) chars.push({ch: '*', color: 'normal'}); }
     else if (t.startsWith('<FACE:')) { /* skip */ }
     else {
-      // Render lowercase as uppercase in preview (same glyphs), but keep them valid
-      const displayChar = t.toUpperCase();
       if (VALID_CHARS.has(t)) {
-        chars.push({ch: displayChar, color: 'normal'});
+        chars.push({ch: t, color: 'normal'});
       } else {
         chars.push({ch: '?', color: 'red'});
       }
