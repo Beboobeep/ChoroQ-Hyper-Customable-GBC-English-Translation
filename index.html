@@ -452,30 +452,8 @@ function insertFace() {
   if (id && expr) insertCode(`<FACE:${id},${expr}>`);
 }
 
-// Auto-uppercase
+// Update on input (no auto-uppercase — lowercase is now supported)
 document.getElementById('english').addEventListener('input', function() {
-  const pos = this.selectionStart;
-  const val = this.value;
-  // Uppercase only outside control codes
-  let result = '';
-  let i = 0;
-  while (i < val.length) {
-    if (val[i] === '[' || val[i] === '<') {
-      const close = val[i] === '[' ? ']' : '>';
-      const end = val.indexOf(close, i);
-      if (end !== -1) {
-        result += val.slice(i, end + 1).toUpperCase();
-        i = end + 1;
-        continue;
-      }
-    }
-    result += val[i].toUpperCase();
-    i++;
-  }
-  if (result !== val) {
-    this.value = result;
-    this.selectionStart = this.selectionEnd = pos;
-  }
   update();
 });
 
@@ -622,7 +600,7 @@ Object.entries(glyphs).forEach(([ch, rows]) => {
 });
 
 // Valid characters in the game's encoding (for unknown char detection)
-const VALID_CHARS = new Set("ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789 !?.,'-/()&#*\"~▼■→←▲★♥_");
+const VALID_CHARS = new Set("ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789 !?.,'-/()&#*\"~▼■→←▲★♥_");
 
 function renderLine(line) {
   const tokens = tokenizeLine(line);
@@ -638,9 +616,10 @@ function renderLine(line) {
     else if (t.startsWith('[E')) { for (let i = 0; i < 5; i++) chars.push({ch: '*', color: 'normal'}); }
     else if (t.startsWith('<FACE:')) { /* skip */ }
     else {
-      const upper = t.toUpperCase();
-      if (VALID_CHARS.has(upper)) {
-        chars.push({ch: upper, color: 'normal'});
+      // Render lowercase as uppercase in preview (same glyphs), but keep them valid
+      const displayChar = t.toUpperCase();
+      if (VALID_CHARS.has(t)) {
+        chars.push({ch: displayChar, color: 'normal'});
       } else {
         chars.push({ch: '?', color: 'red'});
       }
