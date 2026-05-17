@@ -499,49 +499,56 @@ function validate(text) {
   const frames = parseFrames(text);
   const errors = [];
   frames.forEach((f, fi) => {
-    // Filter out lines that are ONLY [END] or <STOP> (fixed-position markers)
-    const allLines = f.split('\n');
-    const textLines = [];
-    let endMarkerCount = 0;
-
-    allLines.forEach(line => {
-      const trimmed = line.trim();
-      if (trimmed === '') return; // skip empty
-      // Check if line is ONLY control codes ([END], <STOP>) with no real text
+    const lines = f.split('\n').filter(l => {
+      const trimmed = l.trim();
+      if (trimmed === '') return false;
+      // Skip lines that are ONLY [END]/<STOP> (not real text lines)
       const tokens = tokenizeLine(trimmed);
-      const hasRealText = tokens.some(t => 
+      return tokens.some(t =>
         t !== '[END]' && t !== '<STOP>' && !t.startsWith('<FACE:')
       );
-      if (!hasRealText) {
-        // Line is only [END]/<STOP> — count markers for 30-char total but not as a text line
-        tokens.forEach(t => { endMarkerCount += tokenWidth(t); });
-        return;
-      }
-      textLines.push(trimmed);
     });
 
-    if (textLines.length > MAX_LINES) {
-      errors.push(`Frame ${fi+1}: ${textLines.length} lines (max ${MAX_LINES})`);
+    if (lines.length > MAX_LINES) {
+      errors.push(`Frame ${fi+1}: ${lines.length} lines (max ${MAX_LINES})`);
     }
 
-    let frameTotalChars = endMarkerCount;
     const hasPageBreak = fi < frames.length - 1;
+    // Check if [END] appears inline on a text line
+    const hasInlineEnd = lines.some(l => {
+      const tokens = tokenizeLine(l.trim());
+      return tokens.includes('[END]');
+    });
 
-    textLines.forEach((line, li) => {
-      const tokens = tokenizeLine(line);
+    // Determine if a marker exists for this frame
+    // ▼ exists if this isn't the last frame
+    // [END] exists if it appears anywhere in the frame text
+    const hasMarker = hasPageBreak || f.indexOf('[END]') !== -1;
+
+    let frameTotalChars = 0;
+
+    lines.forEach((line, li) => {
+      const tokens = tokenizeLine(line.trim());
       let w = 0;
       tokens.forEach(t => w += tokenWidth(t));
 
-      if (w > MAX_CHARS) {
-        errors.push(`Frame ${fi+1}, Line ${li+1}: ${w} chars (max ${MAX_CHARS})`);
+      // Line 3 (index 2) with a page break: ▼ takes 1 char on this line,
+      // so the text itself can only be MAX_CHARS - 1.
+      // ▼ was stripped by parseFrames so we check against reduced limit.
+      const lineMax = (li === 2 && hasPageBreak) ? MAX_CHARS - 1 : MAX_CHARS;
+      
+      if (w > lineMax) {
+        const actual = (li === 2 && hasPageBreak) ? w + 1 : w;
+        errors.push(`Frame ${fi+1}, Line ${li+1}: ${actual} chars (max ${MAX_CHARS})`);
       }
+      // For 30-char total, include the marker
       frameTotalChars += w;
     });
 
-    // ▼ page break counts as 1 char toward the 30-char total only
-    if (hasPageBreak) {
-      frameTotalChars += 1;
-    }
+    // ▼ always counts toward 30-char total
+    if (hasPageBreak) frameTotalChars += 1;
+    // [END] on its own line (not inline) counts toward total
+    if (!hasInlineEnd && f.indexOf('[END]') !== -1) frameTotalChars += 1;
 
     if (frameTotalChars > 30) {
       errors.push(`Frame ${fi+1}: ${frameTotalChars} total chars (max 30 per text box)`);
