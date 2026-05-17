@@ -359,6 +359,7 @@
   </div>
 
   <div class="stats" id="stats"></div>
+  <div class="stats" id="spaceBar" style="display:none; margin-top:4px"></div>
   <div id="errorBox" style="display:none"></div>
 
   <div class="preview">
@@ -744,6 +745,34 @@ function update() {
     `<span>Est. bytes: <b class="info">${bytes}</b></span>` +
     `<span>Errors: <b class="${errors.length ? 'err' : 'ok'}">${errors.length}</b></span>`;
 
+  // Show insertion type and free space for the current entry
+  const spaceBar = document.getElementById('spaceBar');
+  if (fileEntries.length > 0) {
+    const entry = fileEntries[currentEntryIndex];
+    const type = getInsertionType(entry.bank);
+    const space = calculateFreeSpace();
+
+    let spaceHtml = '';
+    if (type === 'inline') {
+      spaceHtml = `<span style="color:#f0a030; font-weight:bold">⚠ INLINE INSERTION</span>` +
+        `<span style="color:#999; margin-left:8px">Bank 0x${entry.bank.toString(16).toUpperCase().padStart(2,'0')} — verify manually</span>`;
+    } else if (type === 'dialogue') {
+      const pct = ((space.dialogueUsed / space.dialogueTotal) * 100).toFixed(1);
+      const color = space.dialogueRemaining < 1000 ? '#ff6b6b' : space.dialogueRemaining < 10000 ? '#f0a030' : '#6bff6b';
+      spaceHtml = `<span>Dialogue pool: <b style="color:${color}">${space.dialogueRemaining.toLocaleString()}</b> bytes free</span>` +
+        `<span style="color:#666; margin-left:8px">(${space.dialogueUsed.toLocaleString()} / ${space.dialogueTotal.toLocaleString()} used, ${pct}%)</span>`;
+    } else if (type === 'parts') {
+      const pct = ((space.partsUsed / space.partsTotal) * 100).toFixed(1);
+      const color = space.partsRemaining < 1000 ? '#ff6b6b' : space.partsRemaining < 5000 ? '#f0a030' : '#6bff6b';
+      spaceHtml = `<span>Parts pool: <b style="color:${color}">${space.partsRemaining.toLocaleString()}</b> bytes free</span>` +
+        `<span style="color:#666; margin-left:8px">(${space.partsUsed.toLocaleString()} / ${space.partsTotal.toLocaleString()} used, ${pct}%)</span>`;
+    }
+    spaceBar.style.display = 'flex';
+    spaceBar.innerHTML = spaceHtml;
+  } else {
+    spaceBar.style.display = 'none';
+  }
+
   const errBox = document.getElementById('errorBox');
   if (errors.length) {
     errBox.style.display = 'block';
@@ -755,6 +784,50 @@ function update() {
 
   currentFrame = 0;
   drawPreview();
+}
+
+// =============================================
+// FREE SPACE TRACKING
+// =============================================
+
+// Dialogue banks relocate to 0x16B470-0x1C7FFF
+const DIALOGUE_BANKS = new Set([0x50, 0x51, 0x52, 0x53, 0x54, 0x55, 0x56, 0x57, 0x58, 0x59, 0x5A, 0x78]);
+const DIALOGUE_FREE_SPACE = 0x1C7FFF - 0x16B470 + 1; // 380,816 bytes
+
+// Parts banks relocate to 0x0A5BEE-0x0BFFFF
+const PARTS_BANKS = new Set([0x27, 0x28, 0x29]);
+const PARTS_FREE_SPACE = 0x0BFFFF - 0x0A5BEE + 1; // 107,538 bytes
+
+function getInsertionType(bank) {
+  if (DIALOGUE_BANKS.has(bank)) return 'dialogue';
+  if (PARTS_BANKS.has(bank)) return 'parts';
+  return 'inline';
+}
+
+function calculateFreeSpace() {
+  let dialogueUsed = 0;
+  let partsUsed = 0;
+
+  for (const entry of fileEntries) {
+    const eng = entry.english;
+    if (!eng || eng === '[Enter your translation here]') continue;
+    
+    const type = getInsertionType(entry.bank);
+    if (type === 'dialogue' || type === 'parts') {
+      const bytes = countBytes(eng);
+      if (type === 'dialogue') dialogueUsed += bytes;
+      else partsUsed += bytes;
+    }
+  }
+
+  return {
+    dialogueUsed,
+    dialogueTotal: DIALOGUE_FREE_SPACE,
+    dialogueRemaining: DIALOGUE_FREE_SPACE - dialogueUsed,
+    partsUsed,
+    partsTotal: PARTS_FREE_SPACE,
+    partsRemaining: PARTS_FREE_SPACE - partsUsed,
+  };
 }
 
 // =============================================
@@ -846,11 +919,19 @@ function parseTranslationFile(content) {
         english = '[Enter your translation here]';
       }
       
+      // Extract bank from header
+      let bank = -1;
+      const bankMatch = header.match(/BANK:\s*0x([0-9A-Fa-f]+)/);
+      if (bankMatch) {
+        bank = parseInt(bankMatch[1], 16);
+      }
+
       fileEntries.push({
         index: idx,
         header: header,
         japanese: japanese,
         english: english,
+        bank: bank,
       });
       
       i += 2; // Skip past header + body
