@@ -105,7 +105,7 @@
 
   textarea {
     width: 100%;
-    background: #2a2a2a;
+    background: transparent;
     color: #e0e0e0;
     border: 1px solid #444;
     border-radius: 4px;
@@ -115,9 +115,37 @@
     line-height: 1.5;
     resize: vertical;
     box-sizing: border-box;
+    position: relative;
+    z-index: 2;
   }
 
-  textarea.source { background: #252525; color: #aaa; }
+  textarea.source { background: transparent; color: #aaa; }
+
+  .editor-wrap {
+    position: relative;
+  }
+
+  .highlight-layer {
+    position: absolute;
+    top: 0; left: 0; right: 0; bottom: 0;
+    padding: 10px;
+    font-family: 'Courier New', monospace;
+    font-size: 13px;
+    line-height: 1.5;
+    white-space: pre-wrap;
+    word-wrap: break-word;
+    overflow: hidden;
+    pointer-events: none;
+    z-index: 1;
+    border: 1px solid transparent;
+    border-radius: 4px;
+    background: #2a2a2a;
+    color: transparent;
+    box-sizing: border-box;
+  }
+
+  .highlight-layer .hl-ok { color: transparent; }
+  .highlight-layer .hl-err { background: rgba(255, 50, 50, 0.35); border-radius: 2px; }
 
   .controls { margin-top: 16px; }
 
@@ -295,14 +323,17 @@
         <label class="section">JAPANESE SOURCE</label>
         <button class="code-btn clear-btn" onclick="document.getElementById('japanese').value=''; update()">Clear</button>
       </div>
-      <textarea id="japanese" class="source" rows="8"></textarea>
+      <textarea id="japanese" class="source" rows="8" style="background:#252525"></textarea>
     </div>
     <div class="col">
       <div style="display:flex; justify-content:space-between; align-items:center">
         <label class="section">ENGLISH TRANSLATION</label>
         <button class="code-btn clear-btn" onclick="document.getElementById('english').value=''; update()">Clear</button>
       </div>
-      <textarea id="english" rows="8" placeholder="Enter translation here..."></textarea>
+      <div class="editor-wrap">
+        <div class="highlight-layer" id="highlightLayer"></div>
+        <textarea id="english" rows="8" placeholder="Enter translation here..."></textarea>
+      </div>
     </div>
   </div>
 
@@ -778,6 +809,120 @@ function nextFrame() {
   if (currentFrame < frames.length - 1) { currentFrame++; drawPreview(); }
 }
 
+// Sync scroll between textarea and highlight layer
+document.addEventListener('DOMContentLoaded', function() {
+  const ta = document.getElementById('english');
+  const hl = document.getElementById('highlightLayer');
+  if (ta && hl) {
+    ta.addEventListener('scroll', function() {
+      hl.scrollTop = ta.scrollTop;
+      hl.scrollLeft = ta.scrollLeft;
+    });
+  }
+});
+
+function buildHighlightHTML(text) {
+  // Parse into frames, figure out which characters are in error regions
+  const frames = parseFrames(text);
+  
+  // Build a character-level error map for the ORIGINAL text (before frame splitting)
+  // We need to map frame/line positions back to the original text positions
+  const charError = new Array(text.length).fill(false);
+  
+  let frameStartInText = 0;
+  
+  frames.forEach((f, fi) => {
+    // Find where this frame starts in the original text
+    // Frames are split by ▼, so we search for the frame content
+    const frameOffset = text.indexOf(f, frameStartInText);
+    const actualStart = frameOffset >= 0 ? frameOffset : frameStartInText;
+    
+    const hasPageBreak = fi < frames.length - 1;
+    
+    // Get text lines (same logic as validate)
+    const allLines = f.split('\n');
+    const textLines = [];
+    const textLineOrigOffsets = [];
+    
+    let lineSearchStart = 0;
+    allLines.forEach(rawLine => {
+      const trimmed = rawLine.trim();
+      if (trimmed === '') { lineSearchStart += rawLine.length + 1; return; }
+      const tokens = tokenizeLine(trimmed);
+      const hasRealText = tokens.some(t =>
+        t !== '[END]' && t !== '<STOP>' && !t.startsWith('<FACE:')
+      );
+      if (!hasRealText) { lineSearchStart += rawLine.length + 1; return; }
+      textLines.push(trimmed);
+      textLineOrigOffsets.push(actualStart + lineSearchStart + (rawLine.length - rawLine.trimStart().length));
+      lineSearchStart += rawLine.length + 1;
+    });
+    
+    // Check each text line for overflow
+    textLines.forEach((line, li) => {
+      const tokens = tokenizeLine(line);
+      let w = 0;
+      tokens.forEach(t => w += tokenWidth(t));
+      
+      const lineMax = (li === 2 && hasPageBreak) ? MAX_CHARS - 1 : MAX_CHARS;
+      
+      if (w > lineMax) {
+        // Find the character position where overflow starts
+        const origOffset = textLineOrigOffsets[li];
+        let charCount = 0;
+        let pos = 0;
+        
+        for (let ti = 0; ti < tokens.length; ti++) {
+          const tw = tokenWidth(tokens[ti]);
+          if (charCount + tw > lineMax) {
+            // Mark from this token onward as error
+            for (let p = origOffset + pos; p < origOffset + line.length; p++) {
+              if (p < charError.length) charError[p] = true;
+            }
+            break;
+          }
+          charCount += tw;
+          pos += tokens[ti].length;
+        }
+      }
+    });
+    
+    // Advance past this frame + the ▼ delimiter
+    frameStartInText = actualStart + f.length + 1; // +1 for ▼
+  });
+  
+  // Build HTML with spans
+  let html = '';
+  let inError = false;
+  
+  for (let i = 0; i < text.length; i++) {
+    const isErr = charError[i];
+    const ch = text[i];
+    
+    if (isErr && !inError) {
+      html += '<span class="hl-err">';
+      inError = true;
+    } else if (!isErr && inError) {
+      html += '</span>';
+      inError = false;
+    }
+    
+    // Escape HTML
+    if (ch === '<') html += '&lt;';
+    else if (ch === '>') html += '&gt;';
+    else if (ch === '&') html += '&amp;';
+    else if (ch === '\n') html += '\n';
+    else html += ch;
+  }
+  
+  if (inError) html += '</span>';
+  
+  // Add trailing newline to match textarea behavior
+  html += '\n';
+  
+  return html;
+}
+
 function update() {
   const text = document.getElementById('english').value;
   const frames = parseFrames(text);
@@ -828,6 +973,12 @@ function update() {
 
   currentFrame = 0;
   drawPreview();
+
+  // Update error highlighting
+  const hl = document.getElementById('highlightLayer');
+  if (hl) {
+    hl.innerHTML = buildHighlightHTML(text);
+  }
 }
 
 // =============================================
