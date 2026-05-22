@@ -393,7 +393,7 @@
   <div class="stats" id="spaceBar" style="display:none; margin-top:4px"></div>
   <div id="errorBox" style="display:none"></div>
 
-  <div class="preview">
+  <div class="preview" id="previewSection">
     <label class="section">TEXT BOX PREVIEW</label>
     <div style="margin-top:8px">
       <canvas id="textbox" width="320" height="80"></canvas>
@@ -405,7 +405,7 @@
     </div>
   </div>
 
-  <div class="reference">
+  <div class="reference" id="referenceSection">
     <b>QUICK REFERENCE</b>
     <div class="ref-grid">
       <span>Max chars/line: 13 (incl. spaces)</span>
@@ -434,6 +434,89 @@
       </div>
     </div>
   </div>
+
+  <!-- EMULATOR SECTION -->
+  <div style="margin-top:24px">
+    <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:8px">
+      <label class="section" style="margin-bottom:0">GBC EMULATOR</label>
+      <button class="code-btn" id="emuToggle" onclick="toggleEmulator()" style="font-size:10px; padding:3px 8px">▶ Show Emulator</button>
+    </div>
+    <div id="emuSection" style="display:none">
+      <div style="margin-bottom:8px; display:flex; gap:8px; align-items:center; flex-wrap:wrap">
+        <label class="code-btn file-btn" style="cursor:pointer; display:inline-block">
+          📂 Load ROM (.gbc)
+          <input type="file" id="romInput" accept=".gbc,.gb,.zip" style="display:none" onchange="loadROM(event)">
+        </label>
+        <span id="romName" style="font-size:11px; color:#888">No ROM loaded</span>
+      </div>
+      <div id="emuContainer" style="width:640px; height:480px; max-width:100%; background:#111; border:2px solid #333; border-radius:4px; position:relative">
+        <div id="game" style="width:100%; height:100%"></div>
+        <div id="emuPlaceholder" style="position:absolute; top:0; left:0; right:0; bottom:0; display:flex; align-items:center; justify-content:center; color:#555; font-size:13px; pointer-events:none">
+          Load a .gbc ROM to start
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- IPS PATCH SECTION -->
+  <div style="margin-top:24px">
+    <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:8px">
+      <label class="section" style="margin-bottom:0">IPS PATCH TOOLS</label>
+      <button class="code-btn" id="ipsToggle" onclick="toggleIPS()" style="font-size:10px; padding:3px 8px">▶ Show IPS Tools</button>
+    </div>
+    <div id="ipsSection" style="display:none">
+
+      <!-- CREATE IPS PATCH -->
+      <div style="background:#222; border:1px solid #333; border-radius:4px; padding:12px; margin-bottom:12px">
+        <b style="color:#f0a030; font-size:12px">CREATE IPS PATCH</b>
+        <div style="font-size:11px; color:#888; margin:4px 0 8px">Compare original ROM with modified ROM to generate an IPS patch file.</div>
+        <div style="display:flex; gap:8px; align-items:center; flex-wrap:wrap">
+          <label class="code-btn file-btn" style="cursor:pointer; display:inline-block">
+            📂 Original ROM
+            <input type="file" id="ipsOriginal" accept=".gbc,.gb,.bin" style="display:none" onchange="ipsOriginalLoaded(event)">
+          </label>
+          <span id="ipsOrigName" style="font-size:11px; color:#888">None</span>
+        </div>
+        <div style="display:flex; gap:8px; align-items:center; flex-wrap:wrap; margin-top:6px">
+          <label class="code-btn file-btn" style="cursor:pointer; display:inline-block">
+            📂 Modified ROM
+            <input type="file" id="ipsModified" accept=".gbc,.gb,.bin" style="display:none" onchange="ipsModifiedLoaded(event)">
+          </label>
+          <span id="ipsModName" style="font-size:11px; color:#888">None</span>
+        </div>
+        <div style="margin-top:8px">
+          <button class="code-btn file-btn" onclick="createIPS()" style="padding:6px 16px">⬇ Generate IPS Patch</button>
+          <span id="ipsCreateStatus" style="font-size:11px; color:#888; margin-left:8px"></span>
+        </div>
+      </div>
+
+      <!-- APPLY IPS PATCH -->
+      <div style="background:#222; border:1px solid #333; border-radius:4px; padding:12px">
+        <b style="color:#7ec8e3; font-size:12px">APPLY IPS PATCH</b>
+        <div style="font-size:11px; color:#888; margin:4px 0 8px">Apply an IPS patch file to a ROM and download the patched result.</div>
+        <div style="display:flex; gap:8px; align-items:center; flex-wrap:wrap">
+          <label class="code-btn file-btn" style="cursor:pointer; display:inline-block">
+            📂 ROM to Patch
+            <input type="file" id="ipsTarget" accept=".gbc,.gb,.bin" style="display:none" onchange="ipsTargetLoaded(event)">
+          </label>
+          <span id="ipsTargetName" style="font-size:11px; color:#888">None</span>
+        </div>
+        <div style="display:flex; gap:8px; align-items:center; flex-wrap:wrap; margin-top:6px">
+          <label class="code-btn file-btn" style="cursor:pointer; display:inline-block">
+            📂 IPS Patch
+            <input type="file" id="ipsPatch" accept=".ips" style="display:none" onchange="ipsPatchLoaded(event)">
+          </label>
+          <span id="ipsPatchName" style="font-size:11px; color:#888">None</span>
+        </div>
+        <div style="margin-top:8px">
+          <button class="code-btn file-btn" onclick="applyIPS()" style="padding:6px 16px">⬇ Apply Patch & Download</button>
+          <span id="ipsApplyStatus" style="font-size:11px; color:#888; margin-left:8px"></span>
+        </div>
+      </div>
+
+    </div>
+  </div>
+
 </div>
 
 <script>
@@ -1368,6 +1451,327 @@ function toggleBg() {
   document.querySelector('.bg-right').style.display = bgEnabled ? '' : 'none';
   document.body.classList.toggle('bg-off', !bgEnabled);
   document.getElementById('bgToggle').textContent = bgEnabled ? '🖼 BG: ON' : '🖼 BG: OFF';
+}
+
+// =============================================
+// IPS PATCH TOOLS
+// =============================================
+
+let ipsVisible = false;
+let ipsOrigData = null;
+let ipsModData = null;
+let ipsTargetData = null;
+let ipsPatchData = null;
+let ipsTargetFileName = '';
+
+function toggleIPS() {
+  ipsVisible = !ipsVisible;
+  document.getElementById('ipsSection').style.display = ipsVisible ? 'block' : 'none';
+  document.getElementById('ipsToggle').textContent = ipsVisible ? '▼ Hide IPS Tools' : '▶ Show IPS Tools';
+}
+
+function readFileAsArrayBuffer(file) {
+  return new Promise((resolve, reject) => {
+    const reader = new FileReader();
+    reader.onload = () => resolve(new Uint8Array(reader.result));
+    reader.onerror = reject;
+    reader.readAsArrayBuffer(file);
+  });
+}
+
+async function ipsOriginalLoaded(event) {
+  const file = event.target.files[0];
+  if (!file) return;
+  ipsOrigData = await readFileAsArrayBuffer(file);
+  document.getElementById('ipsOrigName').textContent = file.name + ' (' + ipsOrigData.length.toLocaleString() + ' bytes)';
+  event.target.value = '';
+}
+
+async function ipsModifiedLoaded(event) {
+  const file = event.target.files[0];
+  if (!file) return;
+  ipsModData = await readFileAsArrayBuffer(file);
+  document.getElementById('ipsModName').textContent = file.name + ' (' + ipsModData.length.toLocaleString() + ' bytes)';
+  event.target.value = '';
+}
+
+async function ipsTargetLoaded(event) {
+  const file = event.target.files[0];
+  if (!file) return;
+  ipsTargetData = await readFileAsArrayBuffer(file);
+  ipsTargetFileName = file.name;
+  document.getElementById('ipsTargetName').textContent = file.name + ' (' + ipsTargetData.length.toLocaleString() + ' bytes)';
+  event.target.value = '';
+}
+
+async function ipsPatchLoaded(event) {
+  const file = event.target.files[0];
+  if (!file) return;
+  ipsPatchData = await readFileAsArrayBuffer(file);
+  document.getElementById('ipsPatchName').textContent = file.name + ' (' + ipsPatchData.length.toLocaleString() + ' bytes)';
+  event.target.value = '';
+}
+
+function createIPS() {
+  const status = document.getElementById('ipsCreateStatus');
+
+  if (!ipsOrigData || !ipsModData) {
+    status.textContent = 'Load both ROMs first!';
+    status.style.color = '#ff6b6b';
+    return;
+  }
+
+  if (ipsOrigData.length !== ipsModData.length) {
+    status.textContent = 'Warning: ROMs are different sizes. Generating anyway...';
+    status.style.color = '#f0a030';
+  } else {
+    status.textContent = 'Generating...';
+    status.style.color = '#888';
+  }
+
+  // IPS format:
+  // Header: "PATCH" (5 bytes)
+  // Records: [offset:3bytes] [size:2bytes] [data:size bytes]
+  //   OR RLE: [offset:3bytes] [0x0000:2bytes] [rle_size:2bytes] [rle_byte:1byte]
+  // Footer: "EOF" (3 bytes)
+
+  const patches = [];
+  const maxLen = Math.max(ipsOrigData.length, ipsModData.length);
+  let i = 0;
+
+  while (i < maxLen) {
+    const origByte = i < ipsOrigData.length ? ipsOrigData[i] : 0;
+    const modByte = i < ipsModData.length ? ipsModData[i] : 0;
+
+    if (origByte !== modByte) {
+      // Found a difference - collect the run
+      const startOffset = i;
+      const diffBytes = [];
+
+      while (i < maxLen) {
+        const ob = i < ipsOrigData.length ? ipsOrigData[i] : 0;
+        const mb = i < ipsModData.length ? ipsModData[i] : 0;
+
+        if (ob !== mb) {
+          diffBytes.push(mb);
+          i++;
+          // IPS record max size is 0xFFFF
+          if (diffBytes.length >= 0xFFFF) break;
+        } else {
+          // Check if there are more diffs within 8 bytes (merge small gaps)
+          let lookAhead = 0;
+          let moreDiffs = false;
+          for (let j = 1; j <= 8 && i + j < maxLen; j++) {
+            const ob2 = (i + j) < ipsOrigData.length ? ipsOrigData[i + j] : 0;
+            const mb2 = (i + j) < ipsModData.length ? ipsModData[i + j] : 0;
+            if (ob2 !== mb2) { moreDiffs = true; lookAhead = j; break; }
+          }
+          if (moreDiffs && diffBytes.length + lookAhead < 0xFFFF) {
+            // Include the gap
+            for (let j = 0; j <= lookAhead; j++) {
+              const mb2 = (i + j) < ipsModData.length ? ipsModData[i + j] : 0;
+              diffBytes.push(mb2);
+            }
+            i += lookAhead + 1;
+          } else {
+            break;
+          }
+        }
+      }
+
+      patches.push({ offset: startOffset, data: diffBytes });
+    } else {
+      i++;
+    }
+  }
+
+  // Build IPS binary
+  const parts = [];
+  // Header
+  parts.push(new Uint8Array([0x50, 0x41, 0x54, 0x43, 0x48])); // "PATCH"
+
+  for (const patch of patches) {
+    const off = patch.offset;
+    const data = patch.data;
+    const size = data.length;
+
+    // Offset: 3 bytes big-endian
+    const record = new Uint8Array(5 + size);
+    record[0] = (off >> 16) & 0xFF;
+    record[1] = (off >> 8) & 0xFF;
+    record[2] = off & 0xFF;
+    // Size: 2 bytes big-endian
+    record[3] = (size >> 8) & 0xFF;
+    record[4] = size & 0xFF;
+    // Data
+    for (let j = 0; j < size; j++) record[5 + j] = data[j];
+    parts.push(record);
+  }
+
+  // Footer
+  parts.push(new Uint8Array([0x45, 0x4F, 0x46])); // "EOF"
+
+  // Combine
+  const totalSize = parts.reduce((sum, p) => sum + p.length, 0);
+  const ipsFile = new Uint8Array(totalSize);
+  let pos = 0;
+  for (const part of parts) {
+    ipsFile.set(part, pos);
+    pos += part.length;
+  }
+
+  // Download
+  const blob = new Blob([ipsFile], { type: 'application/octet-stream' });
+  const url = URL.createObjectURL(blob);
+  const a = document.createElement('a');
+  a.href = url;
+  a.download = 'patch.ips';
+  a.click();
+  URL.revokeObjectURL(url);
+
+  status.textContent = `Generated: ${patches.length} records, ${ipsFile.length.toLocaleString()} bytes`;
+  status.style.color = '#6bff6b';
+}
+
+function applyIPS() {
+  const status = document.getElementById('ipsApplyStatus');
+
+  if (!ipsTargetData || !ipsPatchData) {
+    status.textContent = 'Load both ROM and IPS patch first!';
+    status.style.color = '#ff6b6b';
+    return;
+  }
+
+  // Validate IPS header
+  if (ipsPatchData.length < 8 ||
+      ipsPatchData[0] !== 0x50 || ipsPatchData[1] !== 0x41 ||
+      ipsPatchData[2] !== 0x54 || ipsPatchData[3] !== 0x43 ||
+      ipsPatchData[4] !== 0x48) {
+    status.textContent = 'Invalid IPS file (bad header)';
+    status.style.color = '#ff6b6b';
+    return;
+  }
+
+  status.textContent = 'Applying...';
+  status.style.color = '#888';
+
+  // Work on a copy
+  let result = new Uint8Array(ipsTargetData);
+  let pos = 5; // skip "PATCH"
+  let recordCount = 0;
+
+  while (pos + 3 <= ipsPatchData.length) {
+    // Check for EOF
+    if (ipsPatchData[pos] === 0x45 && ipsPatchData[pos + 1] === 0x4F && ipsPatchData[pos + 2] === 0x46) {
+      break; // "EOF"
+    }
+
+    // Read offset (3 bytes big-endian)
+    const offset = (ipsPatchData[pos] << 16) | (ipsPatchData[pos + 1] << 8) | ipsPatchData[pos + 2];
+    pos += 3;
+
+    // Read size (2 bytes big-endian)
+    const size = (ipsPatchData[pos] << 8) | ipsPatchData[pos + 1];
+    pos += 2;
+
+    if (size === 0) {
+      // RLE record
+      const rleSize = (ipsPatchData[pos] << 8) | ipsPatchData[pos + 1];
+      pos += 2;
+      const rleByte = ipsPatchData[pos];
+      pos += 1;
+
+      // Expand result if needed
+      if (offset + rleSize > result.length) {
+        const newResult = new Uint8Array(offset + rleSize);
+        newResult.set(result);
+        result = newResult;
+      }
+
+      for (let j = 0; j < rleSize; j++) {
+        result[offset + j] = rleByte;
+      }
+    } else {
+      // Normal record
+      // Expand result if needed
+      if (offset + size > result.length) {
+        const newResult = new Uint8Array(offset + size);
+        newResult.set(result);
+        result = newResult;
+      }
+
+      for (let j = 0; j < size; j++) {
+        result[offset + j] = ipsPatchData[pos + j];
+      }
+      pos += size;
+    }
+
+    recordCount++;
+  }
+
+  // Download patched ROM
+  const blob = new Blob([result], { type: 'application/octet-stream' });
+  const url = URL.createObjectURL(blob);
+  const a = document.createElement('a');
+  a.href = url;
+  const baseName = ipsTargetFileName.replace(/\.[^.]+$/, '');
+  a.download = baseName + '_patched.gbc';
+  a.click();
+  URL.revokeObjectURL(url);
+
+  status.textContent = `Applied ${recordCount} records. Output: ${result.length.toLocaleString()} bytes`;
+  status.style.color = '#6bff6b';
+}
+
+// =============================================
+// GBC EMULATOR (EmulatorJS)
+// =============================================
+
+let emuVisible = false;
+let emuLoaded = false;
+
+function toggleEmulator() {
+  emuVisible = !emuVisible;
+  document.getElementById('emuSection').style.display = emuVisible ? 'block' : 'none';
+  document.getElementById('emuToggle').textContent = emuVisible ? '▼ Hide Emulator' : '▶ Show Emulator';
+  
+  // Minimize preview and reference when emulator is active
+  document.getElementById('previewSection').style.display = emuVisible ? 'none' : '';
+  document.getElementById('referenceSection').style.display = emuVisible ? 'none' : '';
+}
+
+function loadROM(event) {
+  const file = event.target.files[0];
+  if (!file) return;
+
+  document.getElementById('romName').textContent = file.name;
+  document.getElementById('emuPlaceholder').style.display = 'none';
+
+  const url = URL.createObjectURL(file);
+
+  // Clear previous emulator instance if any
+  const gameDiv = document.getElementById('game');
+  gameDiv.innerHTML = '';
+
+  // Set EmulatorJS configuration
+  window.EJS_player = '#game';
+  window.EJS_core = 'gambatte';
+  window.EJS_gameUrl = url;
+  window.EJS_pathtodata = 'https://cdn.emulatorjs.org/stable/data/';
+  window.EJS_startOnLoaded = true;
+
+  // Remove old loader script if exists
+  const oldScript = document.getElementById('ejs-loader');
+  if (oldScript) oldScript.remove();
+
+  // Load EmulatorJS
+  const script = document.createElement('script');
+  script.id = 'ejs-loader';
+  script.src = 'https://cdn.emulatorjs.org/stable/data/loader.js';
+  document.body.appendChild(script);
+
+  emuLoaded = true;
+  event.target.value = '';
 }
 
 // Init
