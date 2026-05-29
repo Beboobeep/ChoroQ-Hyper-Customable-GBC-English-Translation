@@ -387,6 +387,13 @@
       <input class="hex" id="faceExpr" placeholder="Expr" maxlength="2">
       <button class="code-btn" onclick="insertFace()">Insert Face</button>
     </div>
+
+    <div style="margin-top:10px; display:flex; gap:6px; flex-wrap:wrap; align-items:center">
+      <label class="section" style="margin-bottom:0; margin-right:4px">AUTO-FORMAT</label>
+      <button class="code-btn" onclick="autoFormatCurrent()" style="background:#2a1a3a; border-color:#5a3a7a; color:#c8a0f0">✨ Format Current (experimental)</button>
+      <button class="code-btn" onclick="autoFormatAll()" style="background:#2a1a3a; border-color:#5a3a7a; color:#c8a0f0">✨ Format All Entries (experimental)</button>
+      <span id="autoFormatStatus" style="font-size:11px; color:#888"></span>
+    </div>
   </div>
 
   <div class="stats" id="stats"></div>
@@ -1772,6 +1779,267 @@ function loadROM(event) {
 
   emuLoaded = true;
   event.target.value = '';
+}
+
+// =============================================
+// AUTO-FORMAT (experimental)
+// =============================================
+
+// Get the display width of a token for formatting purposes
+function formatTokenWidth(token) {
+  if (token === '[E1]') return 13;
+  if (token === '[E2]') return 13;
+  if (token === '[E3]') return 13;
+  if (token === '[E4]') return 6;
+  if (token === '[E5]') return 6;
+  if (token === '[END]') return 1;
+  if (token === '<STOP>') return 0;
+  if (token.startsWith('[E')) return 5;
+  if (token.startsWith('<FACE:')) return 0;
+  return token.length;
+}
+
+function autoFormatText(rawText) {
+  const text = rawText.trim();
+  if (!text) return text;
+
+  // Step 1: Extract leading FACE code if present
+  let faceCode = '';
+  let body = text;
+  const faceMatch = text.match(/^(<FACE:[0-9A-Fa-f]{2},[0-9A-Fa-f]{2}>)/);
+  if (faceMatch) {
+    faceCode = faceMatch[1];
+    body = text.slice(faceMatch[0].length);
+  }
+
+  // Step 2: Extract trailing [END] and <STOP>
+  let trailer = '';
+  const endStopMatch = body.match(/(\[END\]\s*(?:<STOP>)?|<STOP>)\s*$/);
+  if (endStopMatch) {
+    trailer = endStopMatch[0].trim();
+    body = body.slice(0, body.length - endStopMatch[0].length);
+  }
+
+  // Step 3: Normalize — remove existing formatting (newlines, ▼) but preserve content
+  // Split by ▼ first to get raw text, then collapse all whitespace
+  let flatText = body
+    .replace(/▼/g, ' ')
+    .replace(/\n/g, ' ')
+    .replace(/\s+/g, ' ')
+    .trim();
+
+  // Step 4: Tokenize into words and control codes
+  // A "word" is either a control code token or a run of non-space text
+  const wordTokens = [];
+  let i = 0;
+  while (i < flatText.length) {
+    // Skip spaces
+    if (flatText[i] === ' ') {
+      i++;
+      continue;
+    }
+
+    // Check for control codes
+    if (flatText[i] === '[') {
+      const end = flatText.indexOf(']', i);
+      if (end !== -1) {
+        wordTokens.push(flatText.slice(i, end + 1));
+        i = end + 1;
+        continue;
+      }
+    }
+    if (flatText[i] === '<') {
+      const end = flatText.indexOf('>', i);
+      if (end !== -1) {
+        const tag = flatText.slice(i, end + 1);
+        // Skip face codes in the middle (shouldn't happen but be safe)
+        if (tag.startsWith('<FACE:')) {
+          wordTokens.push(tag);
+          i = end + 1;
+          continue;
+        }
+        wordTokens.push(tag);
+        i = end + 1;
+        continue;
+      }
+    }
+
+    // Regular word — collect until space or control code
+    let word = '';
+    while (i < flatText.length && flatText[i] !== ' ') {
+      if (flatText[i] === '[' || flatText[i] === '<') break;
+      word += flatText[i];
+      i++;
+    }
+    if (word) wordTokens.push(word);
+  }
+
+  // Step 5: Word-wrap into lines and frames
+  const MAX_LINE = 13;
+  const MAX_FRAME_CHARS = 30;
+  const MAX_FRAME_LINES = 3;
+
+  const frames = [];
+  let currentFrame = [];
+  let currentLine = [];
+  let currentLineWidth = 0;
+  let currentFrameChars = 0;
+  let currentFrameLines = 0;
+
+  function flushLine() {
+    if (currentLine.length > 0) {
+      currentFrame.push(currentLine.join(' '));
+      currentFrameLines++;
+    }
+    currentLine = [];
+    currentLineWidth = 0;
+  }
+
+  function flushFrame() {
+    flushLine();
+    if (currentFrame.length > 0) {
+      frames.push(currentFrame);
+    }
+    currentFrame = [];
+    currentFrameChars = 0;
+    currentFrameLines = 0;
+  }
+
+  for (let wi = 0; wi < wordTokens.length; wi++) {
+    const word = wordTokens[wi];
+    const wordW = formatTokenWidth(word);
+
+    // Face codes in the middle — just add to current line without width
+    if (word.startsWith('<FACE:')) {
+      currentLine.push(word);
+      continue;
+    }
+
+    // Will this word fit on the current line?
+    const spaceNeeded = currentLine.length > 0 ? 1 : 0; // space before word
+    const newLineWidth = currentLineWidth + spaceNeeded + wordW;
+
+    // Will adding this word exceed the frame's 30-char total?
+    // Account for ▼ marker (1 char) if this won't be the last frame
+    const pendingMarker = 1; // assume we might need a ▼
+    const newFrameChars = currentFrameChars + spaceNeeded + wordW;
+
+    if (newLineWidth <= MAX_LINE && newFrameChars + pendingMarker <= MAX_FRAME_CHARS + pendingMarker) {
+      // Fits on current line and in current frame
+      if (currentLine.length > 0) {
+        currentLine.push(' ');
+        currentLineWidth += 1;
+        currentFrameChars += 1;
+      }
+      currentLine.push(word);
+      currentLineWidth += wordW;
+      currentFrameChars += wordW;
+    } else if (newLineWidth > MAX_LINE && currentFrameLines < MAX_FRAME_LINES - 1 && currentFrameChars + wordW + 1 <= MAX_FRAME_CHARS) {
+      // Doesn't fit on line, but fits in frame on a new line
+      flushLine();
+      currentLine.push(word);
+      currentLineWidth = wordW;
+      currentFrameChars += wordW;
+    } else {
+      // Need a new frame
+      flushFrame();
+      currentLine.push(word);
+      currentLineWidth = wordW;
+      currentFrameChars = wordW;
+    }
+
+    // Check if we've hit 3 lines in current frame
+    if (currentFrameLines >= MAX_FRAME_LINES) {
+      // Current line is on an overflow line — need new frame
+      const savedLine = currentLine;
+      const savedWidth = currentLineWidth;
+      currentLine = [];
+      currentLineWidth = 0;
+      flushFrame();
+      currentLine = savedLine;
+      currentLineWidth = savedWidth;
+      currentFrameChars = savedWidth;
+    }
+  }
+
+  // Flush remaining
+  flushFrame();
+
+  // Step 6: Reassemble with ▼ between frames
+  let result = faceCode;
+
+  for (let fi = 0; fi < frames.length; fi++) {
+    const frame = frames[fi];
+    result += frame.join('\n');
+
+    if (fi < frames.length - 1) {
+      result += '▼\n';
+    }
+  }
+
+  // Add trailer
+  if (trailer) {
+    result += '\n' + trailer;
+  }
+
+  return result;
+}
+
+function autoFormatCurrent() {
+  const ta = document.getElementById('english');
+  const text = ta.value;
+  if (!text.trim()) {
+    document.getElementById('autoFormatStatus').textContent = 'Nothing to format';
+    return;
+  }
+
+  const formatted = autoFormatText(text);
+  ta.value = formatted;
+  update();
+
+  // Also save to fileEntries if loaded
+  if (fileEntries.length > 0) {
+    fileEntries[currentEntryIndex].english = formatted;
+  }
+
+  document.getElementById('autoFormatStatus').textContent = 'Current entry formatted';
+  document.getElementById('autoFormatStatus').style.color = '#c8a0f0';
+}
+
+function autoFormatAll() {
+  if (fileEntries.length === 0) {
+    document.getElementById('autoFormatStatus').textContent = 'No file loaded!';
+    document.getElementById('autoFormatStatus').style.color = '#ff6b6b';
+    return;
+  }
+
+  if (!confirm('This will auto-format ALL translated entries. Untranslated entries will be skipped. Continue?')) {
+    return;
+  }
+
+  // Save current entry first
+  saveCurrentEntry();
+
+  let formatted = 0;
+  let skipped = 0;
+
+  for (let i = 0; i < fileEntries.length; i++) {
+    const entry = fileEntries[i];
+    if (!entry.english || entry.english === '[Enter your translation here]') {
+      skipped++;
+      continue;
+    }
+    entry.english = autoFormatText(entry.english);
+    formatted++;
+  }
+
+  // Reload current entry display
+  displayEntry(currentEntryIndex);
+  updateEntryNav();
+
+  const statusEl = document.getElementById('autoFormatStatus');
+  statusEl.textContent = `Formatted ${formatted} entries (${skipped} skipped)`;
+  statusEl.style.color = '#c8a0f0';
 }
 
 // Init
