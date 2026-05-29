@@ -1927,8 +1927,7 @@ function autoFormatText(rawText) {
     if (newLineWidth <= MAX_LINE && newFrameChars + pendingMarker <= MAX_FRAME_CHARS + pendingMarker) {
       // Fits on current line and in current frame
       if (currentLine.length > 0) {
-        currentLine.push(' ');
-        currentLineWidth += 1;
+        currentLineWidth += 1; // account for space between words
         currentFrameChars += 1;
       }
       currentLine.push(word);
