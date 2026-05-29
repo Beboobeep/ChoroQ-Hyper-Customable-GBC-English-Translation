@@ -1992,11 +1992,21 @@ function autoFormatCurrent() {
     return;
   }
 
-  const formatted = autoFormatText(text);
+  let formatted = autoFormatText(text);
+
+  // Check if Japanese source has [END]<STOP> and English doesn't already
+  if (fileEntries.length > 0) {
+    const jp = fileEntries[currentEntryIndex].japanese || '';
+    if (jp.includes('[END]') && !formatted.includes('[END]')) {
+      formatted = formatted.replace(/\s*$/, '\n[END]<STOP>');
+    } else if (jp.includes('[END]') && !formatted.includes('<STOP>')) {
+      formatted = formatted.replace(/\s*$/, '<STOP>');
+    }
+  }
+
   ta.value = formatted;
   update();
 
-  // Also save to fileEntries if loaded
   if (fileEntries.length > 0) {
     fileEntries[currentEntryIndex].english = formatted;
   }
@@ -2028,7 +2038,17 @@ function autoFormatAll() {
       skipped++;
       continue;
     }
-    entry.english = autoFormatText(entry.english);
+    let result = autoFormatText(entry.english);
+
+    // Check if Japanese source has [END]<STOP> and English doesn't already
+    const jp = entry.japanese || '';
+    if (jp.includes('[END]') && !result.includes('[END]')) {
+      result = result.replace(/\s*$/, '\n[END]<STOP>');
+    } else if (jp.includes('[END]') && !result.includes('<STOP>')) {
+      result = result.replace(/\s*$/, '<STOP>');
+    }
+
+    entry.english = result;
     formatted++;
   }
 
