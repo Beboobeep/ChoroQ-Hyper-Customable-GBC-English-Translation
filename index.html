@@ -391,6 +391,7 @@
     <div style="margin-top:10px; display:flex; gap:6px; flex-wrap:wrap; align-items:center">
       <label class="section" style="margin-bottom:0; margin-right:4px">AUTO-FORMAT</label>
       <button class="code-btn" onclick="autoFormatCurrent()" style="background:#2a1a3a; border-color:#5a3a7a; color:#c8a0f0">✨ Format Current (experimental)</button>
+      <button class="code-btn" onclick="autoFormatErrors()" style="background:#2a1a3a; border-color:#5a3a7a; color:#c8a0f0">✨ Format Errors Only (experimental)</button>
       <button class="code-btn" onclick="autoFormatAll()" style="background:#2a1a3a; border-color:#5a3a7a; color:#c8a0f0">✨ Format All Entries (experimental)</button>
       <span id="autoFormatStatus" style="font-size:11px; color:#888"></span>
     </div>
@@ -2015,6 +2016,55 @@ function autoFormatCurrent() {
 
   document.getElementById('autoFormatStatus').textContent = 'Current entry formatted';
   document.getElementById('autoFormatStatus').style.color = '#c8a0f0';
+}
+
+function autoFormatErrors() {
+  if (fileEntries.length === 0) {
+    document.getElementById('autoFormatStatus').textContent = 'No file loaded!';
+    document.getElementById('autoFormatStatus').style.color = '#ff6b6b';
+    return;
+  }
+
+  saveCurrentEntry();
+
+  let formatted = 0;
+  let skipped = 0;
+  let noErrors = 0;
+
+  for (let i = 0; i < fileEntries.length; i++) {
+    const entry = fileEntries[i];
+    if (!entry.english || entry.english === '[Enter your translation here]') {
+      skipped++;
+      continue;
+    }
+
+    // Check if this entry has errors
+    const errors = validate(entry.english);
+    if (errors.length === 0) {
+      noErrors++;
+      continue;
+    }
+
+    let result = autoFormatText(entry.english);
+
+    // Append [END]<STOP> if Japanese source has it
+    const jp = entry.japanese || '';
+    if (jp.includes('[END]') && !result.includes('[END]')) {
+      result = result.replace(/\s*$/, '\n[END]<STOP>');
+    } else if (jp.includes('[END]') && !result.includes('<STOP>')) {
+      result = result.replace(/\s*$/, '<STOP>');
+    }
+
+    entry.english = result;
+    formatted++;
+  }
+
+  displayEntry(currentEntryIndex);
+  updateEntryNav();
+
+  const statusEl = document.getElementById('autoFormatStatus');
+  statusEl.textContent = `Fixed ${formatted} entries (${noErrors} had no errors, ${skipped} untranslated)`;
+  statusEl.style.color = '#c8a0f0';
 }
 
 function autoFormatAll() {
