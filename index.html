@@ -1931,8 +1931,13 @@ function autoFormatText(rawText) {
     const newFrameChars = currentFrameChars + spaceNeeded + wordW;
     const numLinesInFrame = currentFrame.length + (currentLine.length > 0 ? 1 : 0);
 
-    // Can this word fit on the current line AND within the frame's 30-char budget?
-    if (newLineWidth <= MAX_LINE && newFrameChars <= MAX_FRAME_CHARS) {
+    // Reserve 1 char for ▼ page break marker if there are more words after this frame
+    // We don't know yet if this is the last frame, so conservatively reserve space
+    const hasMoreWords = wi < wordTokens.length - 1;
+    const frameCharBudget = hasMoreWords ? MAX_FRAME_CHARS - 1 : MAX_FRAME_CHARS;
+
+    // Can this word fit on the current line AND within the frame's char budget?
+    if (newLineWidth <= MAX_LINE && newFrameChars <= frameCharBudget) {
       // Fits perfectly
       currentLineWidth += spaceNeeded + wordW;
       currentFrameChars += spaceNeeded + wordW;
@@ -1940,9 +1945,9 @@ function autoFormatText(rawText) {
     }
     // Word doesn't fit on current line — can we start a new line in this frame?
     else if (newLineWidth > MAX_LINE && numLinesInFrame < MAX_FRAME_LINES) {
-      // Check if starting a new line keeps us under 30 chars
+      // Check if starting a new line keeps us under budget
       const charsOnNewLine = currentFrameChars + wordW;
-      if (charsOnNewLine <= MAX_FRAME_CHARS) {
+      if (charsOnNewLine <= frameCharBudget) {
         startNewLine();
         currentLine.push(word);
         currentLineWidth = wordW;
@@ -1955,7 +1960,7 @@ function autoFormatText(rawText) {
         currentFrameChars = wordW;
       }
     }
-    // Frame is full (either 30 chars exceeded or 3 lines used up)
+    // Frame is full (either chars exceeded or 3 lines used up)
     else {
       flushFrame();
       currentLine.push(word);
