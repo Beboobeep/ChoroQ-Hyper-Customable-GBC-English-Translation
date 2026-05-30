@@ -1880,84 +1880,86 @@ function autoFormatText(rawText) {
   const MAX_FRAME_LINES = 3;
 
   const frames = [];
-  let currentFrame = [];
+  let currentFrame = [];  // array of lines (each line is array of words)
   let currentLine = [];
   let currentLineWidth = 0;
   let currentFrameChars = 0;
-  let currentFrameLines = 0;
 
-  function flushLine() {
-    if (currentLine.length > 0) {
-      currentFrame.push(currentLine.join(' '));
-      currentFrameLines++;
-    }
-    currentLine = [];
-    currentLineWidth = 0;
+  function getLineText(line) { return line.join(' '); }
+  function getLineWidth(line) {
+    if (line.length === 0) return 0;
+    let w = 0;
+    line.forEach(word => { w += formatTokenWidth(word); });
+    w += line.length - 1; // spaces between words
+    return w;
   }
 
   function flushFrame() {
-    flushLine();
+    if (currentLine.length > 0) {
+      currentFrame.push(currentLine);
+    }
     if (currentFrame.length > 0) {
-      frames.push(currentFrame);
+      frames.push(currentFrame.map(line => getLineText(line)));
     }
     currentFrame = [];
+    currentLine = [];
+    currentLineWidth = 0;
     currentFrameChars = 0;
-    currentFrameLines = 0;
+  }
+
+  function startNewLine() {
+    if (currentLine.length > 0) {
+      currentFrame.push(currentLine);
+    }
+    currentLine = [];
+    currentLineWidth = 0;
   }
 
   for (let wi = 0; wi < wordTokens.length; wi++) {
     const word = wordTokens[wi];
     const wordW = formatTokenWidth(word);
 
-    // Face codes in the middle — just add to current line without width
+    // Face codes — add without width
     if (word.startsWith('<FACE:')) {
       currentLine.push(word);
       continue;
     }
 
-    // Will this word fit on the current line?
-    const spaceNeeded = currentLine.length > 0 ? 1 : 0; // space before word
+    const spaceNeeded = currentLine.length > 0 ? 1 : 0;
     const newLineWidth = currentLineWidth + spaceNeeded + wordW;
-
-    // Will adding this word exceed the frame's 30-char total?
-    // Account for ▼ marker (1 char) if this won't be the last frame
-    const pendingMarker = 1; // assume we might need a ▼
     const newFrameChars = currentFrameChars + spaceNeeded + wordW;
+    const numLinesInFrame = currentFrame.length + (currentLine.length > 0 ? 1 : 0);
 
-    if (newLineWidth <= MAX_LINE && newFrameChars + pendingMarker <= MAX_FRAME_CHARS + pendingMarker) {
-      // Fits on current line and in current frame
-      if (currentLine.length > 0) {
-        currentLineWidth += 1; // account for space between words
-        currentFrameChars += 1;
+    // Can this word fit on the current line AND within the frame's 30-char budget?
+    if (newLineWidth <= MAX_LINE && newFrameChars <= MAX_FRAME_CHARS) {
+      // Fits perfectly
+      currentLineWidth += spaceNeeded + wordW;
+      currentFrameChars += spaceNeeded + wordW;
+      currentLine.push(word);
+    }
+    // Word doesn't fit on current line — can we start a new line in this frame?
+    else if (newLineWidth > MAX_LINE && numLinesInFrame < MAX_FRAME_LINES) {
+      // Check if starting a new line keeps us under 30 chars
+      const charsOnNewLine = currentFrameChars + wordW;
+      if (charsOnNewLine <= MAX_FRAME_CHARS) {
+        startNewLine();
+        currentLine.push(word);
+        currentLineWidth = wordW;
+        currentFrameChars += wordW;
+      } else {
+        // Won't fit in this frame at all — start new frame
+        flushFrame();
+        currentLine.push(word);
+        currentLineWidth = wordW;
+        currentFrameChars = wordW;
       }
-      currentLine.push(word);
-      currentLineWidth += wordW;
-      currentFrameChars += wordW;
-    } else if (newLineWidth > MAX_LINE && currentFrameLines < MAX_FRAME_LINES - 1 && currentFrameChars + wordW + 1 <= MAX_FRAME_CHARS) {
-      // Doesn't fit on line, but fits in frame on a new line
-      flushLine();
-      currentLine.push(word);
-      currentLineWidth = wordW;
-      currentFrameChars += wordW;
-    } else {
-      // Need a new frame
+    }
+    // Frame is full (either 30 chars exceeded or 3 lines used up)
+    else {
       flushFrame();
       currentLine.push(word);
       currentLineWidth = wordW;
       currentFrameChars = wordW;
-    }
-
-    // Check if we've hit 3 lines in current frame
-    if (currentFrameLines >= MAX_FRAME_LINES) {
-      // Current line is on an overflow line — need new frame
-      const savedLine = currentLine;
-      const savedWidth = currentLineWidth;
-      currentLine = [];
-      currentLineWidth = 0;
-      flushFrame();
-      currentLine = savedLine;
-      currentLineWidth = savedWidth;
-      currentFrameChars = savedWidth;
     }
   }
 
