@@ -584,7 +584,7 @@ Engine with a
  bit less
 「ACCEL」, but
 much longer
-running
+driving
 distance.[END]<STOP>
 ---
 
@@ -773,7 +773,7 @@ It has higher
 「ACCEL」 and
 retains the
 Black MAX's
-great running
+great driving
 distance.
 However, it's
 extremely
@@ -2335,7 +2335,7 @@ FC 22 35 12 01 2A A4 69 93 7B 97 8A 6A 7C FE 6C
 --- ENGLISH TRANSLATION ---
 <FACE:47,06>Ultimate Bio
 Z is the
-ultimate
+ULTIMATE
 engine.
 It already
 has the
@@ -2405,7 +2405,7 @@ FC 09 18 6C 9C 74 66 9C 19 A4 7C 66 6A 7A 26 FE
 --- ENGLISH TRANSLATION ---
 <FACE:47,06>Araka-T Super
 Spec is a
-legendary
+LEGENDARY
 engine that
 can only be
 obtained
@@ -2427,8 +2427,9 @@ values.
 No engine in
 existence
 surpasses it.
-It is the
+It is THE
 ULTIMATE
+LEGENDARY
 ENGINE.
 Thanks for
 playing my
@@ -2469,24 +2470,16 @@ A4 72 66 89 12 66 A4 11 07 28 2B 0F FE 1B 11 02
 とくちょうだ[END]<STOP>
 ---
 --- ENGLISH TRANSLATION ---
-<FACE:47,06>The Rubber
-Tire is a
-commonly▼
-sold
-Rubber-type
-normal tire.▼
-It's an
-ordinary tire
-made of▼
-rubber. Grip
-and other▼
-parameters
+<FACE:47,06>Rubber Tire
+is a common
+tire made of
+rubber.
+Grip and
+other stats
 are low, but
-its▼
-light
-「WEIGHT」 is
-its feature.
-[END]<STOP>
+it at least
+has light
+「WEIGHT」.[END]<STOP>
 ---
 
 ================================================================================
@@ -2521,20 +2514,15 @@ FF
 きょうかしたものだ[END]<STOP>
 ---
 --- ENGLISH TRANSLATION ---
-<FACE:47,06>The Oval
+<FACE:47,06>Oval Rubber
+Tire is a
+common tire.
+It widens the
 Rubber Tire
-is a▼
-commonly sold
-Rubber-type▼
-normal tire.
-It widens the▼
-Rubber Tire
-and
-incorporates▼
+and adds
 steel fiber
-to boost grip▼
-power.
-[END]<STOP>
+to boost
+grip.[END]<STOP>
 ---
 
 ================================================================================
@@ -2569,23 +2557,16 @@ FB 47 FA 06 6E 5C 86 66 9C 5E 91 82 66 5C 78 6A
 きょうかしたものだ[END]<STOP>
 ---
 --- ENGLISH TRANSLATION ---
-<FACE:47,06>The Carbon
-Rubber Tire
-is a▼
-commonly sold
-Rubber-type▼
-normal tire.
+<FACE:47,06>Carbon Rubber
+Tire is a
+common tire.
 It further
-widens▼
-the Oval
-Rubber Tire
-and▼
-incorporates
+widens the
+Oval Rubber
+Tire and adds
 carbon fiber
-to▼
-boost grip
-power.
-[END]<STOP>
+to boost
+grip.[END]<STOP>
 ---
 
 ================================================================================
@@ -2627,24 +2608,19 @@ FF
 もっている タイヤだ[END]<STOP>
 ---
 --- ENGLISH TRANSLATION ---
-<FACE:47,06>The Kevlar
-Rubber Tire
-is a▼
-commonly sold
-Rubber-type▼
-normal tire.
-An extra-wide▼
+<FACE:47,06>Kevlar Rubber
+Tire is a
+common tire.
+An extra-wide
 Rubber Tire
 with Kevlar
-fiber▼
-incorporated
-to boost grip▼
-power. It has
-the highest
-grip▼
+fiber added
+to boost
+grip.
+It has the
+highest grip
 among Rubber
-tires.
-[END]<STOP>
+tires.[END]<STOP>
 ---
 
 ================================================================================
@@ -2687,30 +2663,23 @@ FD FF
 わるいと つかえないぞ[END]<STOP>
 ---
 --- ENGLISH TRANSLATION ---
-<FACE:47,06>The Road
-Runner is a
-commonly▼
-sold Road
-Runner-type
-normal▼
-tire. Road
-Runner types
-are▼
-tires
-designed for
-on-road▼
+<FACE:47,06>Road Runner
+is a common
+tire.
+Road Runner
+types are
+tires made
+for on-road
 racing.
-Running
-「STABILITY」▼
+「STABILITY」
 is high, but
 grip isn't
-great.▼
+great.
 They can't be
 used when
-ground▼
+ground
 conditions
-are poor.
-[END]<STOP>
+are poor.[END]<STOP>
 ---
 
 ================================================================================
@@ -2745,22 +2714,16 @@ FB 47 FA 06 75 5C 82 65 5C 5E 95 5C 7C 66 91 9C
 きょうかした モデルだ[END]<STOP>
 ---
 --- ENGLISH TRANSLATION ---
-<FACE:47,06>The Super
+<FACE:47,06>Super Road
+Runner is a
+common tire.
+It's a wide
 Road Runner
-is a▼
-commonly sold
-Road
-Runner-type▼
-normal tire.
-A widened
-Road▼
-Runner that
-adds grip
-power to▼
-the existing
-good running▼
-「STABILITY」.
-[END]<STOP>
+that adds
+grip to the
+existing good
+driving
+「STABILITY」.[END]<STOP>
 ---
 
 ================================================================================
@@ -2803,29 +2766,24 @@ FB 47 FA 06 48 49 72 9C 86 65 74 66 9E 7C 53 52
 おおきくなっているぞ[END]<STOP>
 ---
 --- ENGLISH TRANSLATION ---
-<FACE:47,06>The HI
-Composite SRR
-is a▼
-commonly sold
-Road
-Runner-type▼
-normal tire.
+<FACE:47,06>HI Composite
+SRR is a
+common tire.
 Short for
-High▼
+High
 Composite
 Super Road
-Runner. An▼
+Runner.
+It's an
 improved
 Super Road
-Runner made▼
+Runner made
 with refined
 materials.
-Adds▼
-even more
-grip power
-for▼
-「STABILITY」.
-[END]<STOP>
+Adds even
+more grip
+for
+「STABILITY」.[END]<STOP>
 ---
 
 ================================================================================
@@ -2863,24 +2821,20 @@ FC 95 5C 7C 66 91 9C 7D 5C 78 6A 84 65 18 FE 81
 [END]<STOP>
 ---
 --- ENGLISH TRANSLATION ---
-<FACE:47,06>The Boron
+<FACE:47,06>Boron
 Composite RT
-is a▼
-commonly sold
-Road
-Runner-type▼
-normal tire.
-An improved
-HI▼
+is a common
+tire.
+It's an
+improved HI
 Composite
-SRR. RT
-stands for▼
+SRR.
+RT stands for
 Racing Tire.
-Built with▼
+Built with
 emphasis on
-running▼
-「STABILITY」.
-[END]<STOP>
+driving
+「STABILITY」.[END]<STOP>
 ---
 
 ================================================================================
@@ -2916,23 +2870,18 @@ FC 09 18 78 6A 84 65 18 A4 78 6A 8C 19 FE 75 86
 わるいのが けってんだ[END]<STOP>
 ---
 --- ENGLISH TRANSLATION ---
-<FACE:47,06>The Sponge
-Tire is a
-commonly▼
-sold
-Sponge-type
-normal tire.▼
+<FACE:47,06>Sponge Tire
+is a common
+tire.
 This type of
 tire is made
-from▼
-sponge and is
+from sponge
+and is
 extremely
-light,▼
-but poor
-「STABILITY」
-is its▼
-drawback.
-[END]<STOP>
+light, but
+its drawback
+is poor
+「STABILITY」.[END]<STOP>
 ---
 
 ================================================================================
@@ -2971,26 +2920,19 @@ A4 78 6A 8C 0F 66 FD FF
 かせげる タイヤだ[END]<STOP>
 ---
 --- ENGLISH TRANSLATION ---
-<FACE:47,06>The Acrilo
-Sponge Tire
-is a▼
-commonly sold
-Sponge-type▼
-normal tire.
+<FACE:47,06>Acrilo Sponge
+Tire is a
+common tire.
 Made from
-acrilo▼
-resin, it has
-lower
-「SURF R」▼
-resistance
+acrilo resin,
+it has lower
+「SURF R」
 compared to
-the▼
-Sponge Tire,
+the Sponge
+Tire,
 allowing it
-to▼
-cover more
-distance.
-[END]<STOP>
+to cover more
+distance.[END]<STOP>
 ---
 
 ================================================================================
@@ -3026,25 +2968,19 @@ A4 0B 66 21 33 12 66 22 A4 0F 05 01 FE 70 66 92
 さいあく だが・・・[END]<STOP>
 ---
 --- ENGLISH TRANSLATION ---
-<FACE:47,06>The Dirt Wolf
-Tire is a▼
-commonly sold
-Dirt
-Wolf-type▼
-normal tire.
+<FACE:47,06>Dirt Wolf
+Tire is a
+common tire.
 Developed for
-dirt▼
-courses, it
-provides high
-grip▼
+dirt courses,
+it provides
+high grip
 even on poor
 ground.
-However,▼
-running
+However,
 「STABILITY」
-is the▼
-worst...
-[END]<STOP>
+is the
+worst...[END]<STOP>
 ---
 
 ================================================================================
@@ -3080,22 +3016,17 @@ FC 78 66 5C 7C 6B 93 84 78 6A 84 65 18 FE 81 5C
 したものだ[END]<STOP>
 ---
 --- ENGLISH TRANSLATION ---
-<FACE:47,06>The Dirt Wolf
-Speeder is a▼
-commonly sold
-Dirt
-Wolf-type▼
-normal tire.
-A composite▼
-material
+<FACE:47,06>Dirt Wolf
+Speeder is a
+common tire.
+It's a
+composite
 version of
-the Dirt▼
-Wolf Tire
-with boosted
-on-road▼
-grip... 「ROAD
-G」.
-[END]<STOP>
+the Dirt Wolf
+Tire with
+boosted on
+road grip...
+「ROAD G」.[END]<STOP>
 ---
 
 ================================================================================
@@ -3134,25 +3065,19 @@ FF
 はっきするぞ[END]<STOP>
 ---
 --- ENGLISH TRANSLATION ---
-<FACE:47,06>The Hunter's
-Dirt Wolf is
-a▼
-commonly sold
-Dirt
-Wolf-type▼
-normal tire.
-By increasing▼
+<FACE:47,06>Hunter's Dirt
+Wolf is a
+common tire.
+By increasing
 「WEIGHT」,
 it's designed
-to▼
-strengthen
-running
-「STABILITY」.▼
+to strengthen
+driving
+「STABILITY」.
 It retains
 「STABILITY」
-on dirt▼
-courses.
-[END]<STOP>
+on dirt
+tracks.[END]<STOP>
 ---
 
 ================================================================================
@@ -3191,26 +3116,19 @@ FD FF
 のびないぞ[END]<STOP>
 ---
 --- ENGLISH TRANSLATION ---
-<FACE:47,06>The Water
-Gazelle Tire
-is a▼
-commonly sold
-Water▼
-Gazelle-type
-normal tire.▼
+<FACE:47,06>Water Gazelle
+Tire is a
+common tire.
 It provides
 great 「WATER」
-grip,▼
-even in water
-hazards,▼
-but 「SURF R」▼
-resistance
+grip, even in
+water
+hazards,
+but 「SURF R」
 is the worst,
-so▼
-running
-distance
-won't extend.
-[END]<STOP>
+so you won't
+cover much
+ground.[END]<STOP>
 ---
 
 ================================================================================
@@ -3249,23 +3167,18 @@ FE 19 35 06 0C 2A 0E 66 FD FF
 はっきするぞ[END]<STOP>
 ---
 --- ENGLISH TRANSLATION ---
-<FACE:47,06>The Power
-Water Gazelle
-is a▼
-common Water
-Gazelle-type▼
-normal tire.▼
-It has
-the highest
-water hazard▼
-grip among
-shop items,
-and it▼
-provides high
-grip even
-outside▼
-water.
-[END]<STOP>
+<FACE:47,06>Power Water
+Gazelle is a
+common tire.
+It has the
+highest water
+hazard grip
+among shop
+items, and it
+even provides
+high grip
+outside of
+water![END]<STOP>
 ---
 
 ================================================================================
@@ -3301,25 +3214,20 @@ FE 81 5C 87 93 78 6A 8C 0F 66 FC 6B 9A 5C 78 5C
 ながくなってるぞ[END]<STOP>
 ---
 --- ENGLISH TRANSLATION ---
-<FACE:47,06>The Long
-Water Gazelle
-is a▼
-commonly sold
-Water▼
-Gazelle-type
-normal tire.▼
+<FACE:47,06>Long Water
+Gazelle is a
+common tire.
 It improves
 the poor
-「SURF R」▼
+「SURF R」
 without
 sacrificing
-the Water▼
+the Water
 Gazelle's
 grip for
-extended▼
-running
-distance.
-[END]<STOP>
+extended
+driving
+distance.[END]<STOP>
 ---
 
 ================================================================================
@@ -3353,18 +3261,13 @@ FB 47 FA 06 75 82 65 6A 70 78 6A 8C 19 FE 1B 11
 [END]<STOP>
 ---
 --- ENGLISH TRANSLATION ---
-<FACE:47,06>The Spike
-Tire is a
-commonly▼
-sold
-Spike-type
-normal tire.▼
-Developed for
-ice. It
-provides▼
+<FACE:47,06>Spike Tire is
+a common
+tire made for
+ice.
+It provides
 high grip on
-icy surfaces.
-[END]<STOP>
+icy tracks.[END]<STOP>
 ---
 
 ================================================================================
@@ -3402,24 +3305,17 @@ FB 47 FA 06 83 9D 5C 74 66 5E 75 82 65 6A 70 78
 [END]<STOP>
 ---
 --- ENGLISH TRANSLATION ---
-<FACE:47,06>The Huge
-Spike Tire is
-a▼
-commonly sold
-Spike-type
-normal▼
-tire. Large
-spikes are
-embedded▼
+<FACE:47,06>Huge Spike
+Tire is a
+common tire.
+Large spikes
+are embedded
 to increase
-grip on icy▼
+grip on icy
 surfaces.
 However,
-running▼
 「STABILITY」
-has gotten
-worse.
-[END]<STOP>
+is worse.[END]<STOP>
 ---
 
 ================================================================================
@@ -3468,33 +3364,26 @@ FB 47 FA 06 84 99 5C 75 66 5E 75 82 65 6A 70 78
 けってんだ[END]<STOP>
 ---
 --- ENGLISH TRANSLATION ---
-<FACE:47,06>The Phase
-Spike Tire is
-a▼
-commonly sold
-Spike-type
-normal▼
-tire.▼
+<FACE:47,06>Phase Spike
+Tire is a
+common tire.
 Developed to
-maintain▼
-ice course
-grip,「ICE G」,
-while▼
-also ensuring
-running▼
+maintain ice
+course grip,
+「ICE G」,
+while also
+ensuring good
 「STABILITY」.
 Spikes extend
-from▼
-the tire
+from the tire
 surface based
-on road▼
-temperature.▼
+on road
+temperature.
 Its drawback
-is the▼
-lack of grip
-on dirt or
-water.
-[END]<STOP>
+is the lack
+of grip on
+dirt and
+water.[END]<STOP>
 ---
 
 ================================================================================
@@ -3536,28 +3425,21 @@ FC 75 82 65 6A 70 26 A4 11 05 24 0C 66 15 FE 69
 [END]<STOP>
 ---
 --- ENGLISH TRANSLATION ---
-<FACE:47,06>The Studless
-Tire is a
-commonly▼
-sold
-Spike-type
-normal tire.▼
+<FACE:47,06>Studless Tire
+is a common
+tire.
 Developed to
-get grip on▼
+get grip on
 unpaved
 surfaces like
-ice▼
-courses
+ice courses
 without using
-spikes.▼
+spikes.
 It features
 higher
-running▼
-stability
+「STABILITY」
 compared to
-spike▼
-tires.
-[END]<STOP>
+spike tires.[END]<STOP>
 ---
 
 ================================================================================
@@ -3592,19 +3474,20 @@ FB 47 FA 06 74 92 6E 46 52 91 82 66 5C 78 6A 8C
 もつものだ[END]<STOP>
 ---
 --- ENGLISH TRANSLATION ---
-<FACE:47,06>The Silica FR
+<FACE:47,06>Silica FR
 Rubber Tire
-is a▼
-special item.
-A rubber tire▼
+is a special
+tire.
+It's a rubber
+tire
 reinforced
 with highly
-refined▼
+refined
 silica fiber.
-It has the▼
+It has the
 highest
 performance
-among the▼
+among the
 well-balanced
 rubber tires.
 [END]<STOP>
@@ -3642,21 +3525,19 @@ FB 47 FA 06 84 96 6A 9C 43 52 94 5C 74 9C 70 66
 たかいのが とくちょうだ[END]<STOP>
 ---
 --- ENGLISH TRANSLATION ---
-<FACE:47,06>The Fine CR
+<FACE:47,06>Fine CR
 Racing is a
-special▼
-item. A road
-course racing
-tire▼
+special
+tire.
+It's a road
+racing tire
 made from
 highly
-refined fine▼
+refined fine
 composite.
-Its high
-running▼
-stability is
-its feature.
-[END]<STOP>
+Its known for
+high
+「STABILITY」.[END]<STOP>
 ---
 
 ================================================================================
@@ -3687,16 +3568,16 @@ FB 47 FA 06 85 66 5C 78 5C 94 6A 5E 94 5C 74 9C
 [END]<STOP>
 ---
 --- ENGLISH TRANSLATION ---
-<FACE:47,06>The Beta-Ray
-Racing is a▼
-special item.
-A racing tire▼
-made from
-fine
-composite▼
+<FACE:47,06>Beta-Ray
+Racing is a
+special
+tire.
+It's a racing
+tire made
+from fine
+composite
 reinforced by
-beta rays.
-[END]<STOP>
+beta rays.[END]<STOP>
 ---
 
 ================================================================================
@@ -3731,24 +3612,22 @@ FE 11 07 28 2B 0F A4 78 6A 8C 0F 66 FC 0E 02 09
 [END]<STOP>
 ---
 --- ENGLISH TRANSLATION ---
-<FACE:47,06>The Fluoro
-Sponge Tire
-is a▼
-special item.▼
-A tire made
-from a
-special▼
+<FACE:47,06>Fluoro Sponge
+Tire is a
+special
+tire.
+It's a tire
+made from a
+special
 material
 combining
-acrilo resin▼
+acrilo resin
 with
-fluorine.▼
+fluorine.
 It raises
-running
-distance and▼
-running
-stability.
-[END]<STOP>
+driving
+distance and
+「STABILITY」.[END]<STOP>
 ---
 
 ================================================================================
@@ -3786,25 +3665,24 @@ FB 47 FA 06 75 5C 82 65 5C 5E 75 86 65 9C 74 66
 くわえてあるぞ[END]<STOP>
 ---
 --- ENGLISH TRANSLATION ---
-<FACE:47,06>The Super
-Sponge Tire
-is a▼
-special item.
-A sponge tire▼
-made through
-special▼
+<FACE:47,06>Super Sponge
+Tire is a
+special
+tire.
+It's a sponge
+tire made via
+special
 processing.
 It adds the
-high▼
-stability of
-racing tires
-to▼
-the light
-weight and
-high grip▼
+high
+「STABILITY」
+of racing
+tires to the
+light
+「WEIGHT」
+and high grip
 of sponge
-tires.
-[END]<STOP>
+tires.[END]<STOP>
 ---
 
 ================================================================================
@@ -3835,19 +3713,17 @@ FF
 [END]<STOP>
 ---
 --- ENGLISH TRANSLATION ---
-<FACE:47,06>The Feather
-Tire is a
-special▼
-item. It
-thoroughly
-pursues▼
+<FACE:47,06>Feather Tire
+is a special
+tire.
+It heavily
+prioritizes
 tire weight
 reduction.
-Being▼
-extremely
-light is its
-feature.
-[END]<STOP>
+Extreme
+lightness is
+its main
+feature.[END]<STOP>
 ---
 
 ================================================================================
@@ -3877,18 +3753,17 @@ FB 47 FA 06 75 8D 95 5C 5E 84 99 73 66 5C 78 6A
 [END]<STOP>
 ---
 --- ENGLISH TRANSLATION ---
-<FACE:47,06>The Swallow
+<FACE:47,06>Swallow
 Feather Tire
-is a▼
-special item.
-A
-Feather-type▼
+is a special
+tire.
+A Feather-
+type
 lightweight
 tire that
-pursues▼
-road running
-performance.
-[END]<STOP>
+pursues
+road driving
+performance.[END]<STOP>
 ---
 
 ================================================================================
@@ -3918,18 +3793,17 @@ FB 47 FA 06 78 5C 6F 5C 5E 84 99 73 66 5C 78 6A
 [END]<STOP>
 ---
 --- ENGLISH TRANSLATION ---
-<FACE:47,06>The Turkey
+<FACE:47,06>Turkey
 Feather Tire
-is a▼
-special item.
-A
-Feather-type▼
+is a special
+tire.
+It's a
+Feather-type
 lightweight
 tire that
-pursues▼
-dirt running
-performance.
-[END]<STOP>
+pursues
+dirt driving
+performance.[END]<STOP>
 ---
 
 ================================================================================
@@ -3959,18 +3833,17 @@ FB 47 FA 06 6F 66 5C 75 5E 84 99 73 66 5C 78 6A
 [END]<STOP>
 ---
 --- ENGLISH TRANSLATION ---
-<FACE:47,06>The Geese
-Feather Tire
-is a▼
-special item.
-A
-Feather-type▼
+<FACE:47,06>Goose Feather
+Tire is a
+special
+tire.
+It's a
+Feather-type
 lightweight
 tire that
-pursues▼
-water running
-performance.
-[END]<STOP>
+pursues
+water driving
+performance.[END]<STOP>
 ---
 
 ================================================================================
@@ -4000,18 +3873,17 @@ FB 47 FA 06 85 65 9C 6F 66 9C 5E 84 99 73 66 5C
 [END]<STOP>
 ---
 --- ENGLISH TRANSLATION ---
-<FACE:47,06>The Penguin
+<FACE:47,06>Penguin
 Feather Tire
-is a▼
-special item.
-A
-Feather-type▼
+is a special
+tire.
+It's a
+Feather-type
 lightweight
 tire that
-pursues▼
-ice running
-performance.
-[END]<STOP>
+pursues
+ice driving
+performance.[END]<STOP>
 ---
 
 ================================================================================
@@ -4043,22 +3915,21 @@ FB 47 FA 06 6B 6A 9C 7B 66 97 5C 5E 89 75 78 9C
 きたいできないぞ[END]<STOP>
 ---
 --- ENGLISH TRANSLATION ---
-<FACE:47,06>The Windy
-Mustang is a
-special▼
-item. A tire
+<FACE:47,06>Windy Mustang
+is a special
+tire.
+It's a tire
 developed
-with the▼
-goal of
-reducing
-「SURF R」▼
+with the goal
+of reducing
+「SURF R」
 to extend
-running
-distance.▼
+driving
+distance..
 Don't expect
-great grip▼
-performance.
-[END]<STOP>
+great grip
+performance
+though.[END]<STOP>
 ---
 
 ================================================================================
@@ -4089,17 +3960,17 @@ FB 47 FA 06 7C 93 80 5C 7C 66 5E 89 75 78 9C 70
 [END]<STOP>
 ---
 --- ENGLISH TRANSLATION ---
-<FACE:47,06>The Tornado
-Mustang is a▼
-special item.
-A Mustang
-tire▼
+<FACE:47,06>Tornado
+Mustang is a
+special
+tire.
+It's a
+Mustang tire
 using newly
 developed
-rubber to▼
+rubber to
 boost on-road
-grip.
-[END]<STOP>
+grip.[END]<STOP>
 ---
 
 ================================================================================
@@ -4129,15 +4000,15 @@ FD FF
 [END]<STOP>
 ---
 --- ENGLISH TRANSLATION ---
-<FACE:47,06>The Blizzard
-Mustang is a▼
-special item.
-A studless
-type▼
+<FACE:47,06>Blizzard
+Mustang is a
+special
+tire.
+It's a
+studless type
 that boosts
-grip on ice▼
-courses.
-[END]<STOP>
+grip on ice
+tracks.[END]<STOP>
 ---
 
 ================================================================================
@@ -4172,22 +4043,21 @@ FE FD FF
 [END]<STOP>
 ---
 --- ENGLISH TRANSLATION ---
-<FACE:47,06>The Running
-Cheetah is a▼
-special item.
-Developed to▼
+<FACE:47,06>driving
+Cheetah is a
+special
+tire.
+Developed to
 provide
-running
-stability on▼
-complex
+「STABILITY」
+on complex
 courses,
-bringing out▼
+it brings out
 100% of the
 effects of
-liners▼
-and similar
-parts.
-[END]<STOP>
+liners and
+similar
+parts.[END]<STOP>
 ---
 
 ================================================================================
@@ -4221,22 +4091,18 @@ FC 1B 07 0A 66 11 14 A4 72 5C 75 26 FE 00 33 12
 かいぞうしてあるぞ[END]<STOP>
 ---
 --- ENGLISH TRANSLATION ---
-<FACE:47,06>The Hunting
-Cheetah is a▼
-specially
-made
-Cheetah-type▼
+<FACE:47,06>Hunting
+Cheetah is a
+special
 tire.
 Modified so
-that even▼
-with a
+that you can
+run stably on
+complex
+courses when
+using a
 powerful
-engine, you▼
-can run
-stably on
-complex▼
-courses.
-[END]<STOP>
+engine.[END]<STOP>
 ---
 
 ================================================================================
@@ -4270,23 +4136,20 @@ FD FF
 [END]<STOP>
 ---
 --- ENGLISH TRANSLATION ---
-<FACE:47,06>The Metal
-Tire is a
-specially▼
-made tire. By
-making
-everything▼
+<FACE:47,06>Metal Tire is
+a special
+tire.
+By making
+everything
 from metal,
 「SURF R」
-is▼
-reduced to
-the absolute▼
-minimum,
-achieving the
-greatest▼
-running
-distance.
-[END]<STOP>
+is reduced to
+the absolute
+minimum to
+achieve the
+greatest
+driving
+distance.[END]<STOP>
 ---
 
 ================================================================================
@@ -4320,24 +4183,22 @@ FC 0A 01 09 02 18 A4 22 18 0F 66 FE FD FF
 [END]<STOP>
 ---
 --- ENGLISH TRANSLATION ---
-<FACE:47,06>The Ostrich
+<FACE:47,06>Ostrich
 Feather T is
-a▼
-custom-order
-tire. It
-pursues▼
-running
+a custom-
+order tire.
+It pursues
+driving
 performance
-regardless▼
+regardless
 of road
 conditions,
-and is the▼
+and is the
 ultimate
 among
-Feather-type▼
+Feather-type
 lightweight
-tires.
-[END]<STOP>
+tires![END]<STOP>
 ---
 
 ================================================================================
@@ -4368,17 +4229,17 @@ FE FD FF
 [END]<STOP>
 ---
 --- ENGLISH TRANSLATION ---
-<FACE:47,06>The Mountain
-Cheetah is a▼
+<FACE:47,06>Mountain
+Cheetah is a
 custom-order
-item. An
-off-road▼
+tire.
+It's an
+off-road
 Cheetah tire.
-It provides▼
+It provides
 especially
 high grip on
-dirt.
-[END]<STOP>
+dirt.[END]<STOP>
 ---
 
 ================================================================================
@@ -4409,21 +4270,18 @@ FB 47 FA 06 79 78 7E 6B 89 5E 69 95 6A 78 6A 8C
 カスタムメタルタイヤだ[END]<STOP>
 ---
 --- ENGLISH TRANSLATION ---
-<FACE:47,06>The Titanium
+<FACE:47,06>Titanium
 Alloy Tire is
-a▼
-custom-order
-item. A
-custom▼
-metal tire
-using
-titanium▼
+a custom-
+order tire.
+It's a metal
+tire that
+uses titanium
 alloy to
 reduce the
-weight▼
+weight
 drawback of
-Metal Tires.
-[END]<STOP>
+Metal Tires.[END]<STOP>
 ---
 
 ================================================================================
@@ -4454,19 +4312,18 @@ FB 47 FA 06 75 70 92 9D 5C 78 6A 8C 19 FE 13 07
 [END]<STOP>
 ---
 --- ENGLISH TRANSLATION ---
-<FACE:47,06>The Screw
-Tire is a▼
+<FACE:47,06>Screw
+Tire is a
 custom-order
-item. The
-tire is▼
+tire.
+The tire is
 shaped like a
 screw,
-providing▼
+providing
 tremendous
 power when
-running▼
-on water.
-[END]<STOP>
+driving
+on water.[END]<STOP>
 ---
 
 ================================================================================
@@ -4497,20 +4354,18 @@ FB 47 FA 06 85 66 69 70 95 5C 78 6A 8C 19 FE 13
 そなえているぞ[END]<STOP>
 ---
 --- ENGLISH TRANSLATION ---
-<FACE:47,06>The Bear Claw
-Tire is a▼
+<FACE:47,06>Bear Claw
+Tire is a
 custom-order
-item. It
-focuses▼
+tire.
+It focuses
 solely on
-raising grip
-power.▼
+raising grip.
 As the name
 suggests, it
-has▼
-grip like a
-bear's claws.
-[END]<STOP>
+has grip like
+a bear's
+claws![END]<STOP>
 ---
 
 ================================================================================
@@ -4541,19 +4396,19 @@ FD FF
 [END]<STOP>
 ---
 --- ENGLISH TRANSLATION ---
-<FACE:47,06>The QRA
-Special Tire
-is a▼
+<FACE:47,06>QRA Special
+Tire is a
 custom-order
-item. A hyper
-tire▼
-made by QRA
-for their ace▼
-racer. It can
-be called the▼
-highest level
 tire.
-[END]<STOP>
+It's a hyper
+tire made by
+QRA for their
+ace racer.
+You could say
+it's the
+pinnacle of
+tire
+technology![END]<STOP>
 ---
 
 ================================================================================
@@ -4581,18 +4436,16 @@ FB 47 FA 06 4D 42 52 6E 75 78 89 78 6A 8C 19 FE
 [END]<STOP>
 ---
 --- ENGLISH TRANSLATION ---
-<FACE:47,06>The MBR
-Custom Tire
-is a▼
+<FACE:47,06>MBR Custom
+Tire is a
 custom-order
-tire. A▼
+tire.
+It's a
 performance
-tire used by▼
-the Mad Black
-Racer... that
-is,▼
-me.
-[END]<STOP>
+tire used by
+Mad Black
+Racer...
+That's me![END]<STOP>
 ---
 
 ================================================================================
@@ -4626,23 +4479,20 @@ FC 13 66 18 A4 0D 01 18 02 26 FE 69 9E 84 65 0A
 [END]<STOP>
 ---
 --- ENGLISH TRANSLATION ---
-<FACE:47,06>The Bio Tire
-is a
-custom-order▼
-tire. A
-special tire
-created by▼
-Professor
-Bio. The more
-you use▼
-it, the more
-its
-performance▼
+<FACE:47,06>Bio Tire
+is a custom-
+order tire.
+It's a tire
+created by
+「PROF. BIO」.
+The more you
+use it, the
+more its
+performance
 improves.
 Which stats
-improve▼
-is up to you.
-[END]<STOP>
+improve is up
+to you.[END]<STOP>
 ---
 
 ================================================================================
@@ -4670,17 +4520,15 @@ FC 82 65 91 8A 5C 78 22 A4 39 3C 37 1E 12 66 FE
 せいちょう させられるぞ[END]<STOP>
 ---
 --- ENGLISH TRANSLATION ---
-<FACE:47,06>The Bio Tire
-X is a rare
-item.▼
+<FACE:47,06>Bio Tire X is
+a rare tire.
 It's an
 evolved form
-of the Bio▼
+of the Bio
 Tire.
-Parameters
-can grow up▼
-to 250.
-[END]<STOP>
+Stats can
+grow up to
+250.[END]<STOP>
 ---
 
 ================================================================================
@@ -4715,23 +4563,22 @@ FC 06 0D 06 18 A4 0A 66 01 29 36 02 FE 78 66 6A
 ものだ[END]<STOP>
 ---
 --- ENGLISH TRANSLATION ---
-<FACE:47,06>The Fairy
-Feather XT is
-a rare▼
-item. Made
-from the
-miraculous▼
-material
+<FACE:47,06>Fairy Feather
+XT is a rare
+tire.
+Made from the
+miraculous
+material,
 Diamond Hair,
-it's the▼
-lightest with
-the highest▼
+it's the
+lightest and
+has the
+highest
 performance.
 Truly worthy
-of▼
-being called
-the miracle
-tire.
+of being
+called the
+miracle tire!
 [END]<STOP>
 ---
 
@@ -4767,25 +4614,22 @@ FB 47 FA 06 72 66 5C 75 7C 5E 89 75 78 9C 70 66
 [END]<STOP>
 ---
 --- ENGLISH TRANSLATION ---
-<FACE:47,06>The Ghost
-Mustang is a
-rare▼
-item. Using
-micro-cloth
-made▼
+<FACE:47,06>Ghost Mustang
+is a rare
+tire.
+Using micro-
+cloth made
 from carbon
 nanotubes at
-the▼
-contact
+its contact
 surface, it's
-said to▼
+said to
 produce
 incredible
-running▼
-distance. A
-legendary
-tire.
-[END]<STOP>
+driving
+distance.
+A LEGENDARY
+tire![END]<STOP>
 ---
 
 ================================================================================
@@ -4826,28 +4670,26 @@ FE 0D 05 01 01 10 A4 09 02 05 14 FC 8A 78 93 78
 [END]<STOP>
 ---
 --- ENGLISH TRANSLATION ---
-<FACE:47,06>The Milfiwa
-is a rare
-item. A▼
+<FACE:47,06>Milfiwa is a
+rare tire.
+It's a
 layered metal
 tire made
-from▼
-lithium alloy
-and titanium▼
+from lithium
+and titanium
 alloy
 transported
-to a space▼
+to a space
 station for
 production.
-It's▼
-more
+It's more
 expensive per
-weight than▼
-diamonds. The
-world's most▼
+weight than
+diamonds!
+The world's
+most
 expensive
-metal tire.
-[END]<STOP>
+metal tire.[END]<STOP>
 ---
 
 ================================================================================
@@ -4885,27 +4727,30 @@ FC 22 35 12 01 2A A4 69 93 7B 97 8A 6A 7C FE 78
 タイヤだ[END]<STOP>
 ---
 --- ENGLISH TRANSLATION ---
-<FACE:47,06>The Ultimate
-Bio X is an▼
-ultimate
-tire. It
-already has▼
-the highest
-parameters
-from the▼
-start, and on
-top of that,
-it▼
+<FACE:47,06>Ultimate
+Bio X is an
+ULTIMATE
+tire.
+It already
+has the
+highest
+stats from
+the start,
+and on top of
+that, it
 resonates
 with the
-user's▼
-spirit,
+user's mind,
 causing its
-parameters▼
-to change. An
-ultimate
-tire.
-[END]<STOP>
+stats to
+change.
+THE ULTIMATE
+TIRE.
+Thanks for
+playing my
+romhack you
+dirty
+cheater![END]<STOP>
 ---
 
 ================================================================================
@@ -4952,38 +4797,40 @@ FE 09 2B 26 A4 09 03 2A 78 6A 8C 19 FC 0E 33 0A
 アルティメイトタイヤだ[END]<STOP>
 ---
 --- ENGLISH TRANSLATION ---
-<FACE:47,06>The Quaro-C
+<FACE:47,06>Quoro-C
 Extremal is
-an▼
-ultimate tire
-that can only
-be▼
+an ULTIMATE
+tire that can
+only be
 obtained
 through
-special▼
-means. This
-tire was made
-from▼
-a legendary
-material▼
+special
+means.
+This tire was
+made from a
+LEGENDARY
+material
 accidentally
-created at a▼
+created at a
 French
 research lab
-called the▼
-Quaro
+called the
+Quoro
 Laboratory.
-All▼
-parameters
-are at ideal
-values,▼
-and no tire
-surpassing
-this one▼
-exists. The
-ultimate
-tire.
-[END]<STOP>
+All stats are
+at ideal
+values, and
+no tire in
+existence
+surpasses it!
+THE ULTIMATE
+LEGENDARY
+TIRE!
+Thanks for
+playing my
+romhack you
+dirty
+cheater![END]<STOP>
 ---
 
 ================================================================================
@@ -5270,7 +5117,7 @@ the wing, air
 resistance is▼
 reduced,
 extending
-running▼
+driving▼
 distance.
 [END]<STOP>
 ---
@@ -5322,7 +5169,7 @@ reduced▼
 air
 resistance
 and higher▼
-running
+driving
 distance.
 [END]<STOP>
 ---
@@ -5414,7 +5261,7 @@ based on▼
 fluid
 dynamics with
 emphasis on▼
-running
+driving
 「STABILITY」.
 [END]<STOP>
 ---
@@ -5465,7 +5312,7 @@ great▼
 downforce
 without
 sacrificing▼
-running
+driving
 stability.
 [END]<STOP>
 ---
@@ -5539,7 +5386,7 @@ An improved
 Eagle▼
 Wing with
 boosted
-running▼
+driving▼
 stability.
 [END]<STOP>
 ---
@@ -5796,7 +5643,7 @@ great
 downforce▼
 without
 sacrificing
-running▼
+driving▼
 stability.
 [END]<STOP>
 ---
@@ -5939,7 +5786,7 @@ zero air
 resistance,
 with great▼
 downforce and
-running▼
+driving▼
 stability.
 [END]<STOP>
 ---
@@ -8070,7 +7917,7 @@ special▼
 item. A type
 with further▼
 boosted
-running
+driving
 stability▼
 over the
 Racing
@@ -8115,7 +7962,7 @@ designed▼
 solely with
 emphasis on
 high▼
-running
+driving
 stability.
 The best▼
 chassis in
@@ -9221,7 +9068,7 @@ liner. It
 further▼
 boosts the
 straight-
-running▼
+driving▼
 ability of
 the Liner▼
 Navigation.
@@ -9270,7 +9117,7 @@ stability▼
 functionality
 to the Liner▼
 Navigation.
-Running
+driving
 stability▼
 has been
 increased.
@@ -9313,7 +9160,7 @@ item.
 Designed to
 pursue▼
 straight-
-running
+driving
 ability. Its▼
 integration
 system
@@ -9374,7 +9221,7 @@ non-contact
 passive
 mechanism▼
 for straight
-running,
+driving,
 surface▼
 resistance
 approaches
@@ -9418,12 +9265,12 @@ special▼
 item.
 Designed to
 pursue▼
-running
+driving
 stability.
 Its synchro▼
 drive
 provides high
-running▼
+driving▼
 stability.
 [END]<STOP>
 ---
@@ -9600,7 +9447,7 @@ induction, it
 provides the
 highest class
 of straight-
-running
+driving
 performance.
 [END]<STOP>
 ---
@@ -9655,7 +9502,7 @@ addition to
 highest▼
 class
 straight-
-running▼
+driving▼
 performance,
 it also shows▼
 highest class
@@ -9772,7 +9619,7 @@ speed, but
 extends
 engine▼
 output time,
-so running▼
+so driving▼
 distance
 normally
 increases.
@@ -9821,7 +9668,7 @@ Governor's
 weight
 section with▼
 metal,
-running
+driving
 distance is▼
 further
 increased.
@@ -10282,7 +10129,7 @@ stabilizer.
 Equipping a▼
 stabilizer
 increases
-running▼
+driving▼
 stability,
 making it
 less▼
@@ -10290,7 +10137,7 @@ likely to
 deviate from
 your▼
 intended
-running line.
+driving line.
 [END]<STOP>
 ---
 
@@ -10329,7 +10176,7 @@ commonly sold
 normal▼
 stabilizer.
 It boosts the▼
-running
+driving
 stability of
 the Daisy▼
 Stabilizer.
@@ -10365,7 +10212,7 @@ FB 47 FA 06 8A 78 93 5E 75 78 83 66 91 6A 73 66
 Stabilizer is
 a▼
 special item.
-Running
+driving
 stability▼
 has
 increased,
@@ -10414,7 +10261,7 @@ A stabilizer▼
 designed for
 weight
 reduction.▼
-Both running
+Both driving
 stability and▼
 resistance
 are at
@@ -19948,7 +19795,7 @@ has good
 「BALANCE」,▼
 so you won't
 lose much
-running▼
+driving▼
 distance when
 colliding
 with▼
@@ -21617,7 +21464,7 @@ Black MAX
 Plus!!▼
 Famous for
 its long
-running▼
+driving▼
 distance,
 it's an
 enhanced▼
@@ -21698,7 +21545,7 @@ Black MAX
 Plus!!▼
 Famous for
 its long
-running▼
+driving▼
 distance,
 it's an
 enhanced▼
@@ -23094,7 +22941,7 @@ A8 FA 06 0E 2B 13 A4 5E 5E 5E FE FC 5E 5E 5E 5E
 <FACE:A9,07>It's the
 「RARE TIRE」
 Milfiwa.▼
-Its running
+Its driving
 「STABILITY」
 is▼
 quite
@@ -24115,7 +23962,7 @@ Sea Dragon.▼
 It's not only
 the lightest,
 but▼
-its running
+its driving
 「STABILITY」
 at the▼
 highest level
@@ -36663,7 +36510,7 @@ collision▼
 is the
 world's best▼
 at 200.
-Running
+Driving
 「STABILITY」▼
 is also
 top-class.
@@ -71247,7 +71094,7 @@ Its
 highest-class
 「LINER」▼
 ability and
-running
+driving
 「STABILITY」▼
 are quite
 appealing.
