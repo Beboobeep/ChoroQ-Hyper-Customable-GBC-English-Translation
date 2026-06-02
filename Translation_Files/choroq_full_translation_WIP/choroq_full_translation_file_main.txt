@@ -4484,7 +4484,7 @@ is a custom-
 order tire.
 It's a tire
 created by
-「PROF. BIO」.
+Prof. Bio.
 The more you
 use it, the
 more its
@@ -4869,24 +4869,19 @@ FC 14 2A 18 26 A4 04 0A 03 2A 09 13 05 66 FE 12
 できるぞ[END]<STOP>
 ---
 --- ENGLISH TRANSLATION ---
-<FACE:47,06>The Feist
-Wing is a
-commonly▼
-sold
-Feist-type
-normal wing.▼
+<FACE:47,06>First Wing is
+a common
+wing.
 Wings can use
-「DOWN F」 to▼
+「DOWN F」 to
 suppress
 slipping and
-spinning▼
+spinning,
 even on road
 surfaces
-where▼
-tire grip
-can't be
-maintained.
-[END]<STOP>
+where tire
+grip can't be
+maintained.[END]<STOP>
 ---
 
 ================================================================================
@@ -4924,26 +4919,20 @@ FB 47 FA 06 75 82 65 95 5C 6B 6A 9C 70 66 19 FE
 [END]<STOP>
 ---
 --- ENGLISH TRANSLATION ---
-<FACE:47,06>The Sparrow
-Wing is a
-commonly▼
-sold
-Bird-type
-normal wing.▼
-A wing made
-light for▼
+<FACE:47,06>Sparrow Wing
+is a common
+wing.
+It's a light
+wing made for
 beginners.
 It's a bit
-lacking▼
-for serious
-use, but its▼
-feature is
-that it
-doesn't▼
-burden the
+lacking for
+serious use,
+but it
+doesn't put
+strain on the
 engine or
-tires.
-[END]<STOP>
+tires.[END]<STOP>
 ---
 
 ================================================================================
@@ -4974,19 +4963,14 @@ FE 1B 11 02 15 A4 02 28 2B 12 01 2A FC 82 66 5C
 [END]<STOP>
 ---
 --- ENGLISH TRANSLATION ---
-<FACE:47,06>The Pigeon
-Wing is a
-commonly▼
-sold
-Bird-type
-normal wing.▼
-An enhanced
+<FACE:47,06>Pigeon Wing
+is a common
+wing with an
+enhanced
 version of
-the▼
-Sparrow
+the Sparrow
 Wing's 「DOWN
-F」.
-[END]<STOP>
+F」.[END]<STOP>
 ---
 
 ================================================================================
@@ -5017,17 +5001,14 @@ FC 83 65 74 66 9F 9C 6B 6A 9C 70 66 18 FE 78 66
 [END]<STOP>
 ---
 --- ENGLISH TRANSLATION ---
-<FACE:47,06>The Crow Wing
-is a commonly▼
-sold
-Bird-type
-normal wing.▼
-A further
-enhancement
-of the▼
-Pigeon Wing's
-downforce.
-[END]<STOP>
+<FACE:47,06>Crow Wing is
+a common
+wing.
+It further
+enhances
+the Pigeon
+Wing's
+downforce.[END]<STOP>
 ---
 
 ================================================================================
@@ -5058,18 +5039,14 @@ FB 47 FA 06 6A 5C 70 66 93 6B 6A 9C 70 66 19 FE
 つよいものだ[END]<STOP>
 ---
 --- ENGLISH TRANSLATION ---
-<FACE:47,06>The Eagle
-Wing is a
-commonly▼
-sold
-Bird-type
-normal wing.▼
+<FACE:47,06>Eagle Wing is
+a common
+wing.
 It has the
 strongest
-「DOWN F」▼
+「DOWN F」
 among the
-Bird type.
-[END]<STOP>
+Bird type.[END]<STOP>
 ---
 
 ================================================================================
@@ -5104,22 +5081,17 @@ FE 38 1D 65 33 15 A4 0B 12 00 2A 18 12 66 FC 0E
 のびているぞ[END]<STOP>
 ---
 --- ENGLISH TRANSLATION ---
-<FACE:47,06>The Speed
-Wing is a
-commonly▼
-sold
-Speed-type
-normal wing.▼
+<FACE:47,06>Speed Wing is
+a common
+wing.
 By using a
 single pillar
-for▼
-the wing, air
-resistance is▼
+for the wing,
+「AIR R」 is
 reduced,
 extending
-driving▼
-distance.
-[END]<STOP>
+the driving
+distance.[END]<STOP>
 ---
 
 ================================================================================
@@ -5155,23 +5127,18 @@ FB 47 FA 06 6E 5C 86 66 9C 52 50 75 83 65 5C 78
 おおきくなっているぞ[END]<STOP>
 ---
 --- ENGLISH TRANSLATION ---
-<FACE:47,06>The Carbon RP
-Speeder is a▼
-commonly sold
-Speed-type
-normal▼
-wing. A
-carbon fiber
-reinforced▼
-Speed wing
-with further
-reduced▼
-air
-resistance
-and higher▼
+<FACE:47,06>Carbon RP
+Speeder is a
+common wing.
+It's a carbon
+fiber Speed
+wing with
+further
+reduced
+「AIR R」 and
+higher
 driving
-distance.
-[END]<STOP>
+distance.[END]<STOP>
 ---
 
 ================================================================================
@@ -5203,20 +5170,16 @@ FE 0A 01 09 02 18 A4 0D 01 18 02 0F 66 FD FF
 さいこうの せいのうだ[END]<STOP>
 ---
 --- ENGLISH TRANSLATION ---
-<FACE:47,06>The Kevlar RP
-Speeder is a▼
-commonly sold
-Speed-type
-normal▼
-wing. A
-Kevlar fiber
-reinforced▼
-wing with the
-highest▼
+<FACE:47,06>Kevlar RP
+Speeder is a
+common wing.
+It's a Kevlar
+fiber wing
+with the
+highest
 performance
-in the Speed
-type.
-[END]<STOP>
+of the Speed
+type.[END]<STOP>
 ---
 
 ================================================================================
@@ -5250,20 +5213,16 @@ FB 47 FA 06 6C 69 95 6B 6A 9C 70 66 19 FE 1B 11
 [END]<STOP>
 ---
 --- ENGLISH TRANSLATION ---
-<FACE:47,06>The Aero Wing
-is a commonly▼
-sold
-Aero-type
-normal wing.▼
-A wing
-designed
-based on▼
+<FACE:47,06>Aero Wing is
+a common
+wing.
+It's design
+is based on
 fluid
 dynamics with
-emphasis on▼
+emphasis on
 driving
-「STABILITY」.
-[END]<STOP>
+「STABILITY」.[END]<STOP>
 ---
 
 ================================================================================
@@ -5298,23 +5257,19 @@ FB 47 FA 06 7A 6A 9C 6B 6A 9C 70 66 19 FE 1B 11
 のが とくちょうだ[END]<STOP>
 ---
 --- ENGLISH TRANSLATION ---
-<FACE:47,06>The Twin Wing
-is a commonly▼
-sold
-Aero-type
-normal wing.▼
-A wing with
-two blades.
-Its▼
-feature is
-providing
-great▼
-downforce
+<FACE:47,06>Twin Wing is
+a common
+wing.
+It's a wing
+with two
+blades.
+It provides
+great
+「DOWN F」
 without
-sacrificing▼
+sacrificing
 driving
-stability.
-[END]<STOP>
+「STABILITY」.[END]<STOP>
 ---
 
 ================================================================================
@@ -5341,16 +5296,17 @@ FB 47 FA 06 69 93 82 66 7C 95 75 6B 6A 9C 70 66
 [END]<STOP>
 ---
 --- ENGLISH TRANSLATION ---
-<FACE:47,06>The Albatross
+<FACE:47,06>Albatross
 Wing is a
-special▼
-item. An
+special
+item.
+It's an
 enhanced
-version of▼
+version of
 the Eagle
-Wing's
-downforce.
-[END]<STOP>
+Wing with
+increased
+「DOWN F」.[END]<STOP>
 ---
 
 ================================================================================
@@ -5378,17 +5334,16 @@ FB 47 FA 06 75 78 5C 5E 6A 5C 70 66 93 6B 6A 9C
 きょうかしたものだ[END]<STOP>
 ---
 --- ENGLISH TRANSLATION ---
-<FACE:47,06>The Star
-Eagle Wing is
-a▼
-special item.
-An improved
-Eagle▼
-Wing with
-boosted
-driving▼
-stability.
-[END]<STOP>
+<FACE:47,06>Star Eagle
+Wing is a
+special
+item.
+It's an
+improved
+Eagle Wing
+with boosted
+driving
+「STABILITY」.[END]<STOP>
 ---
 
 ================================================================================
@@ -5420,21 +5375,21 @@ FB 47 FA 06 70 92 75 78 93 5E 75 83 65 5C 78 66
 よばれているぞ[END]<STOP>
 ---
 --- ENGLISH TRANSLATION ---
-<FACE:47,06>The Crystal
-Speeder is a▼
-special item.
-A Speed-type
-wing▼
-made from
-fiber 
-reinforced▼
-acrylic.
-Called
-「CRYSTAL」▼
+<FACE:47,06>Crystal
+Speeder is a
+special
+wing.
+It's a
+Speed-type
+wing made
+from fiber 
+reinforced
+acrylic
+called
+「CRYSTAL」
 for its
 transparent
-material.
-[END]<STOP>
+appearance.[END]<STOP>
 ---
 
 ================================================================================
@@ -5462,17 +5417,15 @@ FB 47 FA 06 75 83 65 5C 7C 66 75 78 5C 19 FE 13
 ほとんど ないぞ[END]<STOP>
 ---
 --- ENGLISH TRANSLATION ---
-<FACE:47,06>The Speed
-Star is a
-special▼
-item. The
-final form of
-the▼
+<FACE:47,06>Speed Star is
+a special
+wing.
+It's the
 Speed-type
-wing. Almost
-zero▼
-air
-resistance.
+wing's final
+form.
+It has almost
+zero 「AIR R」!
 [END]<STOP>
 ---
 
@@ -5501,17 +5454,14 @@ FB 47 FA 06 75 5C 82 65 5C 5E 7A 6A 9C 6B 6A 9C
 [END]<STOP>
 ---
 --- ENGLISH TRANSLATION ---
-<FACE:47,06>The Super
-Twin Wing is
-a▼
+<FACE:47,06>Super Twin
+Wing is a
 special item.
-A type with
-even▼
+It has even
 greater
-downforce
-than the▼
-Twin Wing.
-[END]<STOP>
+「DOWN F」 than
+the Twin
+Wing.[END]<STOP>
 ---
 
 ================================================================================
@@ -5543,20 +5493,17 @@ A4 22 18 0F 66 FD FF
 かえる ものだ[END]<STOP>
 ---
 --- ENGLISH TRANSLATION ---
-<FACE:47,06>The Flap Wing
-is a special▼
-item. A
-movable wing
-that▼
-constantly
-changes shape
-to▼
-achieve
+<FACE:47,06>Flap Wing is
+a special
+item.
+It changes
+shape on the
+fly to get
 optimal
-downforce▼
-based on the
-situation.
-[END]<STOP>
+「DOWN F」
+in response
+to racing
+conditions.[END]<STOP>
 ---
 
 ================================================================================
@@ -5584,18 +5531,14 @@ FB 47 FA 06 78 66 84 66 93 84 91 9E 84 65 5E 6B
 ウイングだ[END]<STOP>
 ---
 --- ENGLISH TRANSLATION ---
-<FACE:47,06>The Double
-Flap Wing is
-a▼
-special item.
-A wing with▼
-further
-enhanced
-downforce▼
-compared to
-the Flap
-Wing.
-[END]<STOP>
+<FACE:47,06>Double Flap
+Wing is a
+special
+item.
+It has even
+more 「DOWN F」
+than the Flap
+Wing![END]<STOP>
 ---
 
 ================================================================================
@@ -5629,23 +5572,20 @@ FE 13 07 1C 66 11 1A 33 0F 66 FC 84 91 9E 84 65
 [END]<STOP>
 ---
 --- ENGLISH TRANSLATION ---
-<FACE:47,06>The Cascade
-Flap is a
-special▼
-item.
+<FACE:47,06>Cascade Flap
+is a special
+wing.
 Multiple
-flaps are▼
+flaps are
 arranged in
 sequence,
-designed▼
 to achieve
-great
-downforce▼
+fantastic
+downforce
 without
 sacrificing
-driving▼
-stability.
-[END]<STOP>
+driving
+「STABILITY」.[END]<STOP>
 ---
 
 ================================================================================
@@ -5680,23 +5620,24 @@ FB 47 FA 06 78 66 6A 7D 88 9E 70 6B 6A 9C 70 66
 せっけいされているぞ[END]<STOP>
 ---
 --- ENGLISH TRANSLATION ---
-<FACE:47,06>The Dynamic
-Wing is a
-special▼
-item. Not
-just the flap▼
-mechanism,
+<FACE:47,06>Dynamic Wing
+is a special
+item.
+It not only
+has flap
+mechanisms,
 but the
-entire wing▼
-changes shape
-- widening,▼
-rising -
+entire wing
+changes its
+shape.
+It widens its
+span and
+adjusts its
+height
 constantly
-adjusting▼
-to the
-optimal
-state.
-[END]<STOP>
+to maintain
+its optimal
+state.[END]<STOP>
 ---
 
 ================================================================================
@@ -5728,20 +5669,18 @@ FB 47 FA 06 82 6A 87 6B 9C 7C 5E 6B 6A 9C 70 66
 えることが できるぞ[END]<STOP>
 ---
 --- ENGLISH TRANSLATION ---
-<FACE:47,06>The
-High-Mount
-Wing is a▼
-special item.
-The wing is▼
+<FACE:47,06>High-Mount
+Wing is a
+special
+item.
+The wing is
 mounted
 higher than
-usual,▼
+usual,
 allowing it
 to generate
-very▼
-high
-downforce.
-[END]<STOP>
+very high
+「DOWN F」.[END]<STOP>
 ---
 
 ================================================================================
@@ -5775,20 +5714,17 @@ FC 03 28 2B 2A 0E 66 FE FD FF
 [END]<STOP>
 ---
 --- ENGLISH TRANSLATION ---
-<FACE:47,06>The Angel
-Wing is a▼
-custom-order
-item. A wing▼
+<FACE:47,06>Angel Wing is
+a custom-
+order item.
+It's a wing
 shaped like
 angel wings.
-Almost▼
-zero air
-resistance,
-with great▼
-downforce and
-driving▼
-stability.
-[END]<STOP>
+It has great
+「DOWN F」,
+「STABILITY」,
+and zero
+「AIR R」.[END]<STOP>
 ---
 
 ================================================================================
@@ -5820,20 +5756,20 @@ FD FF
 わたしが ほしょうするぞ[END]<STOP>
 ---
 --- ENGLISH TRANSLATION ---
-<FACE:47,06>The MBR
-Custom Wing
-is a▼
+<FACE:47,06>MBR Custom
+Wing is a
 custom-order
-item. The
-custom▼
-wing used by
-the Mad Black▼
-Racer... that
-is, me. I▼
-guarantee its
-great▼
-performance.
-[END]<STOP>
+item.
+It's the wing
+used by the
+Mad Black
+Racer...
+It's the very
+wing that I
+use!
+I guarantee
+its superior
+performance![END]<STOP>
 ---
 
 ================================================================================
@@ -5865,22 +5801,20 @@ FB 47 FA 06 51 52 41 75 85 65 74 9B 93 6B 6A 9C
 ウイングといえるぞ[END]<STOP>
 ---
 --- ENGLISH TRANSLATION ---
-<FACE:47,06>The QRA
-Special Wing
-is a▼
+<FACE:47,06>QRA Special
+Wing is a
 custom-order
-item. A hyper
-wing▼
-made by QRA
-for their ace▼
-racer. Light
-with high
-stats,▼
-it can be
-called the
-highest▼
-level wing.
-[END]<STOP>
+item.
+It's a Hyper
+Wing made by
+QRA for their
+ace racers.
+It's light,
+and also
+boasts high
+stats.
+A top-tier
+wing![END]<STOP>
 ---
 
 ================================================================================
@@ -5908,18 +5842,15 @@ FC 11 05 03 19 66 A4 11 05 02 1D 13 66 FE 18 02
 のうりょくがＵＰするぞ[END]<STOP>
 ---
 --- ENGLISH TRANSLATION ---
-<FACE:47,06>The Bio Wing
-is a
-custom-order▼
-item. A wing
-made from▼
-bio-material.
-The more you
-use▼
-it, the more
-its abilities▼
-improve.
-[END]<STOP>
+<FACE:47,06>Bio Wing is a
+custom-order
+item.
+A wing made
+from bio-
+materials.
+Its abilities
+grow as you
+use it![END]<STOP>
 ---
 
 ================================================================================
@@ -5950,15 +5881,14 @@ FB 47 FA 06 82 66 6A 6D 6B 6A 9C 70 66 5E 85 66
 [END]<STOP>
 ---
 --- ENGLISH TRANSLATION ---
-<FACE:47,06>The Bio Wing
-Beta is a
-rare▼
-item. An
+<FACE:47,06>Bio Wing Beta
+is a rare
+item.
+It's the
 evolved form
-of the▼
-Bio Wing,
-made from
-perfected▼
+of the Bio
+Wing, crafted
+from advanced
 bio-material.
 [END]<STOP>
 ---
@@ -5991,19 +5921,16 @@ FB 47 FA 06 79 99 93 83 66 89 19 FE 06 0B 36 02
 [END]<STOP>
 ---
 --- ENGLISH TRANSLATION ---
-<FACE:47,06>The Cherubim
-is a rare
-item.▼
-The ultimate
-wing made in
-the▼
-same shape as
-the Angel
-Wing▼
-but using
+<FACE:47,06>Cherubim is a
+rare wing.
+An ULTIMATE
+WING made in
+the same
+shape as the
+Angel Wing,
+but with
 diamond
-fiber.
-[END]<STOP>
+fiber![END]<STOP>
 ---
 
 ================================================================================
@@ -6041,27 +5968,30 @@ FB 47 FA 06 69 93 7B 97 8A 6A 7C 5E 82 66 6A 6D
 ウイングだ[END]<STOP>
 ---
 --- ENGLISH TRANSLATION ---
-<FACE:47,06>The Ultimate
-Bio B is an▼
-ultimate
-item. It
-already has▼
-the highest
-parameters
-from the▼
+<FACE:47,06>Ultimate Bio
+B is an
+ULTIMATE
+WING.
+It has the
+highest stats
+from the
 start, and on
 top of that,
-it▼
-resonates
+it resonates
 with the
-user's▼
-spirit,
+user's mind,
 causing its
-parameters▼
-to change. An
-ultimate
-wing.
-[END]<STOP>
+stats to
+change.
+An ULTIMATE
+WING!
+Thanks for
+playing my
+romhack!
+Remember to
+take a shower
+you stinky
+cheater![END]<STOP>
 ---
 
 ================================================================================
@@ -6111,38 +6041,42 @@ FE 29 0E 02 12 06 14 A4 00 0F 01 13 FC 14 35 12
 アルティメイトウイングだ[END]<STOP>
 ---
 --- ENGLISH TRANSLATION ---
-<FACE:47,06>The Eisel E
-Supremer is a▼
-legendary
-wing that can
-only be▼
-obtained
-through
-special▼
-means. An
+<FACE:47,06>Eisel E
+Suprema is a
+LEGENDARY
+WING that can
+only be found
+via special
+means.
+It's an
 extremely
-light wing▼
+light wing
 created by
 Eisel
-Engineering,▼
+Engineering,
 an American
-aircraft▼
+aircraft
 manufacturer,
-from material▼
+from material
 brought back
 from an
-asteroid.▼
-All
-parameters
-are at ideal▼
-values, and
-no wing
-surpassing▼
-this one
-exists. The
-ultimate▼
-wing.
-[END]<STOP>
+asteroid.
+All stats are
+at ideal
+values.
+No other wing
+surpasses it!
+THE ULTIMATE
+WING!
+Thanks for
+playing my
+romhack! Join
+the ChoroQ
+Universe
+Discord to
+help on
+future
+projects![END]<STOP>
 ---
 
 ================================================================================
